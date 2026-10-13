@@ -1,1 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eudaimonia | 60 Stories Library</title>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent: #4f46e5;
+            --border-color: #e2e8f0;
+        }
 
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            font-size: 1.25rem;
+            color: #0f172a;
+            text-decoration: none;
+        }
+
+        .back-btn {
+            background: #0f172a;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+        }
+
+        .hero-banner h1 {
+            margin: 0 0 10px 0;
+            font-size: 2rem;
+        }
+
+        .hero-banner p {
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 16px;
+        }
+
+        .story-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px 12px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+            transition: all 0.2s ease;
+        }
+
+        .story-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            background: #faf5ff;
+        }
+
+        .story-number {
+            font-size: 1.1rem;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .story-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo-area">
+            ✦ Eudaimonia
+        </a>
+        <a href="index.html" class="back-btn">← Back to Home</a>
+    </header>
+
+    <div class="container">
+        <div class="hero-banner">
+            <h1>Story Library</h1>
+            <p>Explore all 60 PDF stories and historical accounts. Click any story card below to open its reading view.</p>
+        </div>
+
+        <div class="grid-container" id="story-grid">
+            <!-- JavaScript will automatically inject all 60 stories here -->
+        </div>
+    </div>
+
+    <script>
+        // Automatically generate buttons for Stories 1 to 60
+        const grid = document.getElementById('story-grid');
+        
+        for (let i = 1; i <= 60; i++) {
+            const card = document.createElement('a');
+            // Link to your viewer page or PDF file (e.g., pdfs/story-1.pdf or viewer.html?id=1)
+            card.href = `viewer.html?id=${i}`; 
+            card.className = 'story-card';
+            
+            card.innerHTML = `
+                <span class="story-number">Story ${i}</span>
+                <span class="story-label">Read PDF</span>
+            `;
+            
+            grid.appendChild(card);
+        }
+    </script>
+
+</body>
+</html>
