@@ -247,6 +247,21 @@
       .toolbar select {
         width: 100%;
       }
+
+      
+.more-btn {
+  background: #e2e8f0;
+  color: #14213d;
+}
+
+.more-btn:hover {
+  background: #cbd5e1;
+  color: #14213d;
+}
+
+.hidden-set {
+  display: none;
+}
     }
   </style>
 </head>
@@ -453,6 +468,62 @@ file: `${i + 1} pdf.htm`
       });
     }
 
+if (Array.isArray(quiz.sets) && quiz.sets.length > 0) {
+  const setLinks = document.createElement("div");
+  setLinks.className = "set-links";
+
+  const INITIAL_DAYS = 6;
+
+  quiz.sets.forEach((set, index) => {
+    const link = document.createElement("a");
+
+    link.className = "btn";
+    link.href = set.file;
+    link.textContent = set.title;
+
+    // প্রথম ৬টি ছাড়া বাকি দিন লুকানো থাকবে
+    if (index >= INITIAL_DAYS) {
+      link.classList.add("hidden-set");
+    }
+
+    setLinks.appendChild(link);
+  });
+
+  card.appendChild(setLinks);
+
+  // More Days বাটন
+  if (quiz.sets.length > INITIAL_DAYS) {
+    const moreBtn = document.createElement("button");
+    moreBtn.className = "btn more-btn";
+    moreBtn.textContent = "More Days ▼";
+    moreBtn.type = "button";
+
+    let expanded = false;
+
+    moreBtn.addEventListener("click", () => {
+      expanded = !expanded;
+
+      setLinks.querySelectorAll(".hidden-set").forEach(link => {
+        link.style.display = expanded ? "inline-flex" : "none";
+      });
+
+      moreBtn.textContent = expanded
+        ? "Show Less ▲"
+        : "More Days ▼";
+    });
+
+    card.appendChild(moreBtn);
+  }
+
+} else if (quiz.file) {
+  const link = document.createElement("a");
+
+  link.className = "btn";
+  link.href = quiz.file;
+  link.textContent = "Start Quiz";
+
+  card.appendChild(link);
+}
     // ========================================
     // SEARCH AND CATEGORY FILTER
     // ========================================
