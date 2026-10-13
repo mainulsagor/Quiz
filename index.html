@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quiz Hub | Choose an Exam</title>
+  <meta name="description" content="Choose a quiz and start your exam.">
+  <style>
+    :root { --navy:#14213d; --blue:#2563eb; --bg:#f4f7fb; --muted:#64748b; --line:#e2e8f0; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Arial,Helvetica,sans-serif; color:#172033; background:var(--bg); }
+    .topbar { background:var(--navy); color:white; padding:18px 22px; }
+    .topbar-inner { max-width:1100px; margin:auto; display:flex; align-items:center; justify-content:space-between; gap:14px; }
+    .brand { font-size:21px; font-weight:800; letter-spacing:.2px; }
+    .brand span { color:#93c5fd; }
+    .tag { font-size:12px; background:#24365d; padding:7px 10px; border-radius:999px; }
+    main { max-width:1100px; margin:34px auto; padding:0 18px 40px; }
+    .hero { background:white; border:1px solid var(--line); border-radius:20px; padding:28px; box-shadow:0 8px 28px #14213d0a; }
+    .eyebrow { color:var(--blue); font-weight:700; text-transform:uppercase; letter-spacing:1.5px; font-size:11px; }
+    h1 { font-size:clamp(28px,4vw,40px); margin:10px 0; color:var(--navy); }
+    .intro { color:var(--muted); line-height:1.6; max-width:650px; margin:0; }
+    .toolbar { display:flex; gap:12px; margin:24px 0 18px; flex-wrap:wrap; }
+    input, select { font:inherit; border:1px solid #cbd5e1; background:white; border-radius:10px; padding:12px 14px; }
+    input { flex:1; min-width:220px; }
+    .count { color:var(--muted); font-size:13px; margin:0 0 14px; }
+    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+    .card { background:white; border:1px solid var(--line); border-radius:16px; padding:20px; display:flex; flex-direction:column; min-height:220px; box-shadow:0 5px 18px #14213d08; }
+    .icon { width:44px; height:44px; display:grid; place-items:center; border-radius:12px; background:#eff6ff; font-size:22px; margin-bottom:15px; }
+    .card h2 { font-size:18px; margin:0 0 8px; color:var(--navy); }
+    .card p { color:var(--muted); line-height:1.5; font-size:14px; margin:0 0 18px; flex:1; }
+    .meta { font-size:12px; color:#64748b; margin-bottom:14px; }
+    .btn { display:inline-flex; justify-content:center; align-items:center; text-decoration:none; color:white; background:var(--blue); padding:11px 14px; border-radius:10px; font-weight:700; font-size:14px; }
+    .btn:hover { background:#1d4ed8; }
+    .empty { background:white; border:1px dashed #cbd5e1; border-radius:14px; padding:28px; color:var(--muted); grid-column:1/-1; }
+    footer { color:var(--muted); text-align:center; font-size:12px; padding:22px; }
+    @media (max-width:800px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media (max-width:540px) { .grid { grid-template-columns:1fr; } .hero { padding:22px; } .topbar-inner { align-items:flex-start; flex-direction:column; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">Quiz<span>Hub</span></div>
+      <div class="tag">ONLINE PRACTICE EXAMS</div>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="eyebrow">Your practice space</div>
+      <h1>Choose a quiz to begin</h1>
+      <p class="intro">Select a subject below to open its exam. Search by title or subject, then press “Start quiz”.</p>
+    </section>
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="Search quizzes…" aria-label="Search quizzes">
+      <select id="category" aria-label="Filter by category">
+        <option value="all">All subjects</option>
+      </select>
+    </div>
+    <p class="count" id="count" aria-live="polite"></p>
+    <section class="grid" id="quizGrid"></section>
+  </main>
+  <footer>QuizHub · Add or remove quiz entries in the QUIZZES list in index.html.</footer>
+  <script>
+    // IMPORTANT: Put your quiz HTML files inside the "quizzes" folder.
+    // Then add one entry per file below. The file path is case-sensitive on GitHub Pages.
+    const QUIZZES = [
+      { title: "Sample English Quiz", category: "English", description: "Try this demo quiz, then replace it with your own HTML files.", file: "quizzes/sample-quiz.html", icon: "✍️", details: "2 sample questions" }
+
+      // Add more quizzes by placing a comma after the entry above, then adding entries like:
+      // { title: "GRE Vocabulary", category: "Vocabulary", description: "Practice GRE words.", file: "quizzes/gre-vocabulary.html", icon: "📘", details: "Your quiz details" },
+      // { title: "General Knowledge", category: "General Knowledge", description: "Review general knowledge.", file: "quizzes/general-knowledge.html", icon: "🌍", details: "Your quiz details" }
+    ];
+
+    const grid = document.getElementById("quizGrid");
+    const search = document.getElementById("search");
+    const category = document.getElementById("category");
+    const count = document.getElementById("count");
+
+    [...new Set(QUIZZES.map(q => q.category))].sort().forEach(name => {
+      const option = document.createElement("option");
+      option.value = name; option.textContent = name; category.appendChild(option);
+    });
+
+    function render() {
+      const term = search.value.trim().toLowerCase();
+      const selected = category.value;
+      const items = QUIZZES.filter(q =>
+        (selected === "all" || q.category === selected) &&
+        [q.title, q.category, q.description].join(" ").toLowerCase().includes(term)
+      );
+      count.textContent = `${items.length} quiz${items.length === 1 ? "" : "zes"} available`;
+      grid.replaceChildren();
+      if (!items.length) {
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        empty.textContent = "No quizzes match your search. Try another title or subject.";
+        grid.appendChild(empty); return;
+      }
+      items.forEach(q => {
+        const card = document.createElement("article"); card.className = "card";
+        const icon = document.createElement("div"); icon.className = "icon"; icon.textContent = q.icon || "📝";
+        const title = document.createElement("h2"); title.textContent = q.title;
+        const desc = document.createElement("p"); desc.textContent = q.description;
+        const meta = document.createElement("div"); meta.className = "meta"; meta.textContent = q.category + (q.details ? " · " + q.details : "");
+        const link = document.createElement("a"); link.className = "btn"; link.textContent = "Start quiz →"; link.href = q.file;
+        card.append(icon, title, desc, meta, link); grid.appendChild(card);
+      });
+    }
+    search.addEventListener("input", render);
+    category.addEventListener("change", render);
+    render();
+  </script>
+</body>
+</html>
