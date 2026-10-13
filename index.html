@@ -183,6 +183,7 @@
       border: none;
       cursor: pointer;
       transition: background .2s;
+      font-family: inherit;
     }
 
     .btn:hover {
@@ -197,7 +198,23 @@
     }
 
     .set-links .btn {
-      flex: 1 1 70px;
+      flex: 1 1 90px;
+    }
+
+    .hidden-set {
+      display: none;
+    }
+
+    .more-btn {
+      width: 100%;
+      margin-top: 12px;
+      background: #e2e8f0;
+      color: var(--navy);
+    }
+
+    .more-btn:hover {
+      background: #cbd5e1;
+      color: var(--navy);
     }
 
     .card > .btn {
@@ -247,21 +264,6 @@
       .toolbar select {
         width: 100%;
       }
-
-      
-.more-btn {
-  background: #e2e8f0;
-  color: #14213d;
-}
-
-.more-btn:hover {
-  background: #cbd5e1;
-  color: #14213d;
-}
-
-.hidden-set {
-  display: none;
-}
     }
   </style>
 </head>
@@ -279,10 +281,12 @@
 
     <section class="hero">
       <div class="eyebrow">Your practice space</div>
+
       <h1>Choose a quiz to begin</h1>
+
       <p class="intro">
         Select a subject below to open its exam.
-        Search by title or subject, then press a quiz button.
+        Search by quiz title, subject, or day.
       </p>
     </section>
 
@@ -290,7 +294,7 @@
       <input
         id="search"
         type="search"
-        placeholder="Search quizzes..."
+        placeholder="Search quizzes or days..."
         aria-label="Search quizzes"
       >
 
@@ -312,21 +316,21 @@
   <script>
     // ========================================
     // QUIZ LIST
-    // Update file paths to match your files.
     // ========================================
 
     const QUIZZES = [
       {
-title: "GRE Vocabulary",
-category: "Vocabulary",
-description: "Practice GRE vocabulary MCQs from Day 1 to Day 100.",
-icon: "📘",
-sets: Array.from({ length: 100 }, (_, i) => ({
-title: `DAY ${i + 1}`,
-file: `${i + 1} pdf.htm`
-}))
-},
+        title: "GRE Vocabulary",
+        category: "Vocabulary",
+        description: "Practice GRE vocabulary MCQs from Day 1 to Day 100.",
+        icon: "📘",
 
+        // Automatically generate DAY 1 to DAY 100.
+        sets: Array.from({ length: 100 }, (_, i) => ({
+          title: `DAY ${i + 1}`,
+          file: `${i + 1} PDF.htm`
+        }))
+      },
 
       {
         title: "333 Barrons",
@@ -340,7 +344,7 @@ file: `${i + 1} pdf.htm`
       {
         title: "Word Smart Practice",
         category: "Model Test",
-        description: "MCQ of 1800 question.",
+        description: "Practice Word Smart MCQs.",
         icon: "📝",
         file: "wordsmart.html",
         details: "Practice exam"
@@ -366,10 +370,8 @@ file: `${i + 1} pdf.htm`
 
     categories.forEach(name => {
       const option = document.createElement("option");
-
       option.value = name;
       option.textContent = name;
-
       category.appendChild(option);
     });
 
@@ -393,9 +395,7 @@ file: `${i + 1} pdf.htm`
           ...(quiz.sets || []).map(set => set.title)
         ].join(" ").toLowerCase();
 
-        const matchesSearch = searchableText.includes(term);
-
-        return matchesCategory && matchesSearch;
+        return matchesCategory && searchableText.includes(term);
       });
 
       count.textContent =
@@ -405,19 +405,15 @@ file: `${i + 1} pdf.htm`
 
       grid.replaceChildren();
 
-      // Show message if no quiz is found.
       if (filteredQuizzes.length === 0) {
         const empty = document.createElement("div");
-
         empty.className = "empty";
         empty.textContent =
           "No quizzes match your search. Try another title or subject.";
-
         grid.appendChild(empty);
         return;
       }
 
-      // Create each quiz card.
       filteredQuizzes.forEach(quiz => {
         const card = document.createElement("article");
         card.className = "card";
@@ -430,31 +426,68 @@ file: `${i + 1} pdf.htm`
         heading.textContent = quiz.title;
 
         const description = document.createElement("p");
-        description.textContent = quiz.description;
+        description.textContent = quiz.description || "";
 
-        card.appendChild(icon);
-        card.appendChild(heading);
-        card.appendChild(description);
+        card.append(icon, heading, description);
 
-        // Multiple sets: Set 1, Set 2, Set 3...
+        // ========================================
+        // MULTIPLE SETS + MORE DAYS BUTTON
+        // ========================================
+
         if (Array.isArray(quiz.sets) && quiz.sets.length > 0) {
           const setLinks = document.createElement("div");
           setLinks.className = "set-links";
 
-          quiz.sets.forEach(set => {
+          const INITIAL_DAYS = 6;
+
+          quiz.sets.forEach((set, index) => {
             const link = document.createElement("a");
 
             link.className = "btn";
             link.href = set.file;
             link.textContent = set.title;
 
+            if (index >= INITIAL_DAYS) {
+              link.classList.add("hidden-set");
+            }
+
             setLinks.appendChild(link);
           });
 
           card.appendChild(setLinks);
 
+          if (quiz.sets.length > INITIAL_DAYS) {
+            const moreBtn = document.createElement("button");
+
+            moreBtn.className = "btn more-btn";
+            moreBtn.type = "button";
+            moreBtn.textContent = "More Days ▼";
+            moreBtn.setAttribute("aria-expanded", "false");
+
+            let expanded = false;
+
+            moreBtn.addEventListener("click", () => {
+              expanded = !expanded;
+
+              setLinks.querySelectorAll(".hidden-set").forEach(link => {
+                link.style.display = expanded ? "inline-flex" : "none";
+              });
+
+              moreBtn.textContent = expanded
+                ? "Show Less ▲"
+                : "More Days ▼";
+
+              moreBtn.setAttribute(
+                "aria-expanded",
+                String(expanded)
+              );
+            });
+
+            card.appendChild(moreBtn);
+          }
+
         } else if (quiz.file) {
-          // Single quiz: Start Quiz button.
+          // Single quiz button.
           const link = document.createElement("a");
 
           link.className = "btn";
@@ -468,62 +501,6 @@ file: `${i + 1} pdf.htm`
       });
     }
 
-if (Array.isArray(quiz.sets) && quiz.sets.length > 0) {
-  const setLinks = document.createElement("div");
-  setLinks.className = "set-links";
-
-  const INITIAL_DAYS = 6;
-
-  quiz.sets.forEach((set, index) => {
-    const link = document.createElement("a");
-
-    link.className = "btn";
-    link.href = set.file;
-    link.textContent = set.title;
-
-    // প্রথম ৬টি ছাড়া বাকি দিন লুকানো থাকবে
-    if (index >= INITIAL_DAYS) {
-      link.classList.add("hidden-set");
-    }
-
-    setLinks.appendChild(link);
-  });
-
-  card.appendChild(setLinks);
-
-  // More Days বাটন
-  if (quiz.sets.length > INITIAL_DAYS) {
-    const moreBtn = document.createElement("button");
-    moreBtn.className = "btn more-btn";
-    moreBtn.textContent = "More Days ▼";
-    moreBtn.type = "button";
-
-    let expanded = false;
-
-    moreBtn.addEventListener("click", () => {
-      expanded = !expanded;
-
-      setLinks.querySelectorAll(".hidden-set").forEach(link => {
-        link.style.display = expanded ? "inline-flex" : "none";
-      });
-
-      moreBtn.textContent = expanded
-        ? "Show Less ▲"
-        : "More Days ▼";
-    });
-
-    card.appendChild(moreBtn);
-  }
-
-} else if (quiz.file) {
-  const link = document.createElement("a");
-
-  link.className = "btn";
-  link.href = quiz.file;
-  link.textContent = "Start Quiz";
-
-  card.appendChild(link);
-}
     // ========================================
     // SEARCH AND CATEGORY FILTER
     // ========================================
