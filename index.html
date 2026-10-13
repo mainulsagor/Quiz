@@ -65,38 +65,101 @@
     // Then add one entry per file below. The file path is case-sensitive on GitHub Pages.
     //const QUIZZES = [
      // { title: "Sample English Quiz", category: "English", description: "Try this demo quiz, then replace it with your own HTML files.", file: "quizzes/sample-quiz.html", icon: "✍️", details: "2 sample questions" }
-const QUIZZES = [
-  {
-    title: "GRE Vocabulary",
-    category: "Vocabulary",
-    description: "Practice GRE vocabulary MCQs.",
-    icon: "📘",
-    sets: [
-      { title: "Set 1", file: "quizzes/43 PDF.htm" },
-      { title: "Set 2", file: "quizzes/44 pdf.htm" },
-      { title: "Set 3", file: "quizzes/gre-set-3.html" }
-    ],
-  },
+<script>
+  const QUIZZES = [
+    {
+      title: "GRE Vocabulary",
+      category: "Vocabulary",
+      description: "Practice GRE vocabulary MCQs.",
+      icon: "📘",
+      sets: [
+        { title: "Set 1", file: "quizzes/43-pdf.html" },
+        { title: "Set 2", file: "quizzes/44-pdf.html" },
+        { title: "Set 3", file: "quizzes/gre-set-3.html" }
+      ]
+    },
+    {
+      title: "English Grammar",
+      category: "English",
+      description: "Practice English grammar questions.",
+      file: "quizzes/44-pdf.html",
+      icon: "✍️",
+      details: "Grammar test"
+    },
+    {
+      title: "Model Test 1",
+      category: "Model Test",
+      description: "Complete your model examination.",
+      file: "quizzes/model-test-1.html",
+      icon: "📝",
+      details: "Practice exam"
+    }
+  ];
 
-  {
-    title: "English Grammar",
-    category: "English",
-    description: "Practice English grammar questions.",
-    file: "quizzes/44 pdf.htm",
-    icon: "✍️",
-    details: "Grammar test"
-  },
+  const grid = document.getElementById("quizGrid");
+  const search = document.getElementById("search");
+  const category = document.getElementById("category");
+  const count = document.getElementById("count");
 
-  {
-    title: "Model Test 1",
-    category: "Model Test",
-    description: "Complete your model examination.",
-    file: "quizzes/model-test-1.html",
-    icon: "📝",
-    details: "Practice exam"
+  // Populate category dropdown
+  [...new Set(QUIZZES.map(q => q.category))].sort().forEach(name => {
+    const option = document.createElement("option");
+    option.value = name;
+    option.textContent = name;
+    category.appendChild(option);
+  });
+
+  function render() {
+    const term = search.value.trim().toLowerCase();
+    const selected = category.value;
+    
+    const items = QUIZZES.filter(q => 
+      (selected === "all" || q.category === selected) && 
+      [q.title, q.category, q.description].join(" ").toLowerCase().includes(term)
+    );
+
+    count.textContent = `${items.length} quiz ${items.length === 1 ? "" : "zes"} available`;
+    grid.replaceChildren();
+
+    if (!items.length) {
+      const empty = document.createElement("div");
+      empty.className = "empty";
+      empty.textContent = "No quizzes match your search. Try another title or subject.";
+      grid.appendChild(empty);
+      return;
+    }
+
+    items.forEach(q => {
+      const card = document.createElement("div");
+      card.className = "quiz-card"; // Adjust to match your CSS card class if needed
+
+      let linksHtml = "";
+      // Check if the item has multiple sets vs a single file
+      if (q.sets && q.sets.length > 0) {
+        linksHtml = `<div class="set-links">` + 
+          q.sets.map(s => `<a href="${s.file}" class="set-btn">${s.title}</a>`).join(" ") + 
+          `</div>`;
+      } else {
+        linksHtml = `<a href="${q.file}" class="set-btn">Start Quiz</a>`;
+      }
+
+      card.innerHTML = `
+        <div class="quiz-icon">${q.icon || "📝"}</div>
+        <h3>${q.title}</h3>
+        <p>${q.description}</p>
+        ${linksHtml}
+      `;
+      grid.appendChild(card);
+    });
   }
-];
 
+  // Event listeners
+  search.addEventListener("input", render);
+  category.addEventListener("change", render);
+
+  // Initial render
+  render();
+</script>
     const grid = document.getElementById("quizGrid");
     const search = document.getElementById("search");
     const category = document.getElementById("category");
