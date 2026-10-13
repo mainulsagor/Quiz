@@ -302,26 +302,16 @@
 
     const QUIZZES = [
       {
-        title: "GRE Vocabulary",
-        category: "Vocabulary",
-        description: "Practice GRE vocabulary MCQs.",
-        icon: "📘",
+title: "GRE Vocabulary",
+category: "Vocabulary",
+description: "Practice GRE vocabulary MCQs from Day 1 to Day 100.",
+icon: "📘",
+sets: Array.from({ length: 100 }, (_, i) => ({
+title: `DAY ${i + 1}`,
+file: `quizzes/${i + 1} PDF.htm`
+}))
+},
 
-        sets: [
-          {
-            title: "DAY 43",
-            file: "43 PDF.htm"
-          },
-          {
-            title: "DAY 44",
-            file: "44 pdf.htm"
-          },
-          {
-            title: "DAY 45",
-            file: "sample-quiz.html"
-          }
-        ]
-      },
 
       {
         title: "333 Barrons",
