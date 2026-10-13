@@ -126,36 +126,34 @@
     <div class="container">
         <div class="hero-banner">
             <h1>Story Library</h1>
-            <p>Explore all 60 PDF stories and historical accounts. Click any story card below to open its reading view.</p>
+            <p>Explore all 60 PDF stories and historical accounts. Click any story card below to open its PDF.</p>
         </div>
 
         <div class="grid-container" id="story-grid">
-            <!-- JavaScript will automatically inject all 60 stories here -->
+            <!-- JavaScript automatically builds all 60 cards here -->
         </div>
     </div>
 
-   <script>
-  // Automatically generate buttons for Stories 1 to 60
-  const grid = document.getElementById('story-grid');
-  
-  for (let i = 1; i <= 60; i++) {
-    const card = document.createElement('a');
-    
-    // Choose your correct path format:
-    // Option 1: If using a viewer page
-    card.href = `viewer.html?id=${i}`;
-    
-    // Option 2: If linking directly to PDFs in a folder (uncomment target if needed)
-    // card.href = `pdfs/story-${i}.pdf`;
-    // card.target = "_blank";
+    <script>
+        const grid = document.getElementById('story-grid');
+        
+        // Loop from 1 to 60 to build each card automatically
+        for (let i = 1; i <= 60; i++) {
+            const card = document.createElement('a');
+            
+            // This links to your folder "pdfs" and files named story1.pdf, story2.pdf, etc.
+            card.href = `pdfs/story${i}.pdf`; 
+            card.target = "_blank"; // Opens the PDF in a new clean tab
+            card.className = 'story-card';
+            
+            card.innerHTML = `
+                <span class="story-number">Story ${i}</span>
+                <span class="story-label">Read PDF</span>
+            `;
+            
+            grid.appendChild(card);
+        }
+    </script>
 
-    card.className = 'story-card';
-    card.innerHTML = `
-      <span class="story-number">Story ${i}</span>
-      <span class="story-label">Read PDF</span>
-    `;
-    grid.appendChild(card);
-  }
-</script>
 </body>
 </html>
