@@ -160,44 +160,6 @@
   // Initial render
   render();
 </script>
-    const grid = document.getElementById("quizGrid");
-    const search = document.getElementById("search");
-    const category = document.getElementById("category");
-    const count = document.getElementById("count");
-
-    [...new Set(QUIZZES.map(q => q.category))].sort().forEach(name => {
-      const option = document.createElement("option");
-      option.value = name; option.textContent = name; category.appendChild(option);
-    });
-
-    function render() {
-      const term = search.value.trim().toLowerCase();
-      const selected = category.value;
-      const items = QUIZZES.filter(q =>
-        (selected === "all" || q.category === selected) &&
-        [q.title, q.category, q.description].join(" ").toLowerCase().includes(term)
-      );
-      count.textContent = `${items.length} quiz${items.length === 1 ? "" : "zes"} available`;
-      grid.replaceChildren();
-      if (!items.length) {
-        const empty = document.createElement("div");
-        empty.className = "empty";
-        empty.textContent = "No quizzes match your search. Try another title or subject.";
-        grid.appendChild(empty); return;
-      }
-      items.forEach(q => {
-        const card = document.createElement("article"); card.className = "card";
-        const icon = document.createElement("div"); icon.className = "icon"; icon.textContent = q.icon || "📝";
-        const title = document.createElement("h2"); title.textContent = q.title;
-        const desc = document.createElement("p"); desc.textContent = q.description;
-        const meta = document.createElement("div"); meta.className = "meta"; meta.textContent = q.category + (q.details ? " · " + q.details : "");
-        const link = document.createElement("a"); link.className = "btn"; link.textContent = "Start quiz →"; link.href = q.file;
-        card.append(icon, title, desc, meta, link); grid.appendChild(card);
-      });
-    }
-    search.addEventListener("input", render);
-    category.addEventListener("change", render);
-    render();
-  </script>
+  
 </body>
 </html>
