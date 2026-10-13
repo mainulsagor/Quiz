@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root { --ink:#172033; --muted:#667085; --line:#e4e7ec; --blue:#2357d6; --bg:#f5f7fb; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.5 Arial, sans-serif; }
+    .wrap { max-width:980px; margin:28px auto; padding:0 16px 40px; }
+    .hero { background:#172b4d; color:#fff; padding:28px; border-radius:18px; margin-bottom:18px; }
+    .hero h1 { margin:0 0 8px; font-size:clamp(24px,4vw,34px); }
+    .hero p { margin:0; color:#dce5f7; }
+    .panel { background:#fff; border:1px solid var(--line); border-radius:16px; padding:22px; margin-bottom:16px; box-shadow:0 3px 14px #1018280a; }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    label { display:block; font-weight:600; margin-bottom:6px; }
+    input[type=text], input[type=email] { width:100%; padding:12px; border:1px solid #cfd4dc; border-radius:9px; font-size:16px; }
+    button { border:0; border-radius:10px; padding:12px 18px; background:var(--blue); color:white; font-weight:700; font-size:15px; cursor:pointer; }
+    button:disabled { opacity:.55; cursor:wait; }
+    button.secondary { background:#eef2ff; color:#233e91; }
+    .barrow { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+    .progress { height:8px; background:#e9edf5; border-radius:99px; overflow:hidden; margin:14px 0; }
+    .progress > div { height:100%; width:0; background:var(--blue); transition:width .2s; }
+    .qnum { color:var(--muted); font-size:14px; font-weight:700; }
+    .question { font-size:21px; font-weight:700; margin:8px 0 18px; }
+    .option { display:flex; gap:12px; align-items:flex-start; padding:13px 14px; border:1px solid var(--line); border-radius:10px; margin:9px 0; cursor:pointer; }
+    .option:hover { border-color:#a7b9f8; background:#f8faff; }
+    .option input { margin-top:5px; }
+    .notice { color:var(--muted); font-size:14px; }
+    .error { color:#b42318; background:#fff1f0; border:1px solid #fecdca; padding:12px; border-radius:10px; margin:12px 0; }
+    .hidden { display:none !important; }
+    .score { font-size:42px; font-weight:800; }
+    .result-item { padding:14px 0; border-bottom:1px solid var(--line); }
+    .correct { color:#067647; } .wrong { color:#b42318; }
+    @media(max-width:620px) { .grid { grid-template-columns:1fr; } .hero,.panel { padding:18px; } .question { font-size:19px; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <h1>GRE 333 Vocabulary Test</h1>
+    <p>666 questions · Meaning / synonym and antonym · Results saved to Google Sheets</p>
+  </header>
+
+  <section id="startPanel" class="panel">
+    <h2>Candidate information</h2>
+    <div class="grid">
+      <div><label for="candidateName">Full name</label><input id="candidateName" type="text" maxlength="150" placeholder="Enter your name" required></div>
+      <div><label for="candidateEmail">Email address</label><input id="candidateEmail" type="email" maxlength="254" placeholder="you@example.com"></div>
+    </div>
+    <p class="notice">This is a full-length test. Your score and candidate details will be recorded in the linked spreadsheet.</p>
+    <div id="startError" class="error hidden"></div>
+    <button id="startBtn" onclick="startQuiz()">Load test</button>
+  </section>
+
+  <section id="quizPanel" class="panel hidden">
+    <div class="barrow"><div id="counter" class="qnum">Question 1 of 666</div><div id="answeredCount" class="notice">0 answered</div></div>
+    <div class="progress"><div id="progressFill"></div></div>
+    <div id="questionText" class="question"></div>
+    <div id="options"></div>
+    <div class="barrow" style="margin-top:20px">
+      <button class="secondary" id="prevBtn" onclick="move(-1)">Previous</button>
+      <span class="notice">You can leave a question unanswered and return to it.</span>
+      <button id="nextBtn" onclick="move(1)">Next</button>
+    </div>
+    <div class="barrow" style="margin-top:14px">
+      <span></span><button id="submitBtn" onclick="submitTest()">Submit test</button>
+    </div>
+    <div id="quizError" class="error hidden"></div>
+  </section>
+
+  <section id="resultPanel" class="panel hidden">
+    <h2>Test results</h2>
+    <div id="scoreLine" class="score"></div>
+    <p id="scoreMeta"></p>
+    <div class="barrow"><h3>Answer review</h3><button class="secondary" onclick="toggleReview()">Show / hide details</button></div>
+    <div id="review"></div>
+  </section>
+</div>
+<script>
+  let questions = [];
+  let answers = {};
+  let current = 0;
+  let submitted = false;
+
+  function showError(id, message) {
+    const el = document.getElementById(id);
+    el.textContent = message;
+    el.classList.remove('hidden');
+  }
+  function clearError(id) {
+    const el = document.getElementById(id);
+    el.textContent = '';
+    el.classList.add('hidden');
+  }
+
+  function startQuiz() {
+    clearError('startError');
+    const name = document.getElementById('candidateName').value.trim();
+    const email = document.getElementById('candidateEmail').value.trim();
+    if (!name) { showError('startError', 'Please enter your name.'); return; }
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showError('startError', 'Please enter a valid email address or leave it blank.'); return;
+    }
+    const btn = document.getElementById('startBtn');
+    btn.disabled = true; btn.textContent = 'Loading questions…';
+    google.script.run
+      .withSuccessHandler(data => {
+        questions = data.questions;
+        answers = {};
+        current = 0;
+        document.getElementById('startPanel').classList.add('hidden');
+        document.getElementById('quizPanel').classList.remove('hidden');
+        renderQuestion();
+      })
+      .withFailureHandler(err => {
+        showError('startError', err && err.message ? err.message : String(err));
+        btn.disabled = false; btn.textContent = 'Load test';
+      })
+      .getQuizData();
+  }
+
+  function renderQuestion() {
+    const q = questions[current];
+    document.getElementById('counter').textContent = `Question ${current + 1} of ${questions.length}`;
+    document.getElementById('questionText').textContent = q.question;
+    document.getElementById('progressFill').style.width = ((current + 1) / questions.length * 100) + '%';
+    document.getElementById('prevBtn').disabled = current === 0;
+    document.getElementById('nextBtn').textContent = current === questions.length - 1 ? 'Last question' : 'Next';
+    const options = document.getElementById('options');
+    options.innerHTML = '';
+    q.options.forEach((option, i) => {
+      const label = document.createElement('label');
+      label.className = 'option';
+      const radio = document.createElement('input');
+      radio.type = 'radio'; radio.name = 'answer'; radio.value = option;
+      radio.checked = answers[q.id] === option;
+      radio.addEventListener('change', () => {
+        answers[q.id] = option;
+        updateAnsweredCount();
+      });
+      const span = document.createElement('span');
+      span.textContent = String.fromCharCode(65 + i) + '. ' + option;
+      label.appendChild(radio); label.appendChild(span); options.appendChild(label);
+    });
+    updateAnsweredCount();
+    clearError('quizError');
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function updateAnsweredCount() {
+    const count = Object.keys(answers).filter(k => answers[k]).length;
+    document.getElementById('answeredCount').textContent = `${count} answered · ${questions.length - count} unanswered`;
+  }
+
+  function move(delta) {
+    const target = current + delta;
+    if (target < 0 || target >= questions.length) return;
+    current = target;
+    renderQuestion();
+  }
+
+  function submitTest() {
+    if (submitted) return;
+    const unanswered = questions.length - Object.keys(answers).filter(k => answers[k]).length;
+    const ok = confirm(`Submit your test?\nAnswered: ${questions.length - unanswered}\nUnanswered: ${unanswered}`);
+    if (!ok) return;
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true; btn.textContent = 'Submitting…';
+    clearError('quizError');
+    const payload = {
+      name: document.getElementById('candidateName').value.trim(),
+      email: document.getElementById('candidateEmail').value.trim(),
+      answers: answers
+    };
+    google.script.run
+      .withSuccessHandler(result => {
+        submitted = true;
+        document.getElementById('quizPanel').classList.add('hidden');
+        document.getElementById('resultPanel').classList.remove('hidden');
+        document.getElementById('scoreLine').textContent = `${result.score} / ${result.total}`;
+        document.getElementById('scoreMeta').textContent =
+          `${result.percentage}% · Wrong: ${result.wrong} · Unanswered: ${result.unanswered}. Your result has been saved.`;
+        renderReview(result.details);
+        window.scrollTo({top:0, behavior:'smooth'});
+      })
+      .withFailureHandler(err => {
+        showError('quizError', err && err.message ? err.message : String(err));
+        btn.disabled = false; btn.textContent = 'Submit test';
+      })
+      .submitQuiz(payload);
+  }
+
+  function renderReview(details) {
+    const review = document.getElementById('review');
+    review.innerHTML = '';
+    details.forEach((d, i) => {
+      const item = document.createElement('div');
+      item.className = 'result-item';
+      const heading = document.createElement('div');
+      heading.textContent = `${i + 1}. ${d.question}`;
+      heading.style.fontWeight = '700';
+      const your = document.createElement('div');
+      your.textContent = 'Your answer: ' + d.selectedAnswer;
+      your.className = d.isCorrect ? 'correct' : 'wrong';
+      const correct = document.createElement('div');
+      correct.textContent = 'Correct answer: ' + d.correctAnswer;
+      const explanation = document.createElement('div');
+      explanation.textContent = 'Explanation: ' + d.explanation;
+      explanation.className = 'notice';
+      item.append(heading, your, correct, explanation);
+      review.appendChild(item);
+    });
+  }
+
+  function toggleReview() {
+    const review = document.getElementById('review');
+    review.classList.toggle('hidden');
+  }
+</script>
+</body>
+</html>
