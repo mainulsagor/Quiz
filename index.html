@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Quiz Hub | Choose an Exam</title>
+  <title>Eudaimonia | Choose an Exam</title>
   <meta name="description" content="Choose a quiz and start your exam.">
 
   <style>
@@ -790,7 +790,97 @@ select:focus-visible {
     transition-duration: 0.01ms !important;
   }
 }
-```
+
+/* Ancient Knowledge Sections */
+.ancient-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 28px;
+  margin: 28px 0;
+  padding: 22px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(20, 33, 61, 0.07);
+  overflow: hidden;
+}
+
+.ancient-section:nth-of-type(even) .ancient-image {
+  order: 2;
+}
+
+.ancient-image {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  display: block;
+  border-radius: 14px;
+}
+
+.ancient-content {
+  padding: 12px;
+}
+
+.ancient-label {
+  color: #b8860b;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.ancient-content h2 {
+  color: #14213d;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(24px, 3vw, 32px);
+  margin: 12px 0;
+}
+
+.ancient-content p {
+  color: #64748b;
+  line-height: 1.8;
+  font-size: 15px;
+  margin-bottom: 22px;
+}
+
+.ancient-btn {
+  display: inline-block;
+  padding: 12px 20px;
+  border-radius: 9px;
+  background: #14213d;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  transition: 0.25s;
+}
+
+.ancient-btn:hover {
+  background: #b8860b;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 700px) {
+  .ancient-section {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 14px;
+  }
+
+  .ancient-section:nth-of-type(even) .ancient-image {
+    order: 0;
+  }
+
+  .ancient-image {
+    height: 220px;
+  }
+
+  .ancient-content {
+    padding: 8px;
+  }
+}
 
   </style>
 </head>
@@ -799,7 +889,7 @@ select:focus-visible {
 
   <header class="topbar">
     <div class="topbar-inner">
-      <div class="brand">Quiz<span>Hub</span></div>
+      <div class="brand">Eudaimonia<span></span></div>
       <div class="tag">ONLINE PRACTICE EXAMS</div>
     </div>
   </header>
@@ -817,6 +907,85 @@ select:focus-visible {
       </p>
     </section>
 
+<!-- SECTION 1: ALEXANDRIA NEXUS -->
+<section class="ancient-section">
+  <img
+    class="ancient-image"
+    src="images/ancient-library.jpg"
+    alt="Ancient library and classical architecture"
+    loading="lazy"
+  >
+
+  <div class="ancient-content">
+    <span class="ancient-label">Ancient Civilizations</span>
+    <h2>Alexandria Nexus</h2>
+    <p>
+      Explore ancient civilizations, historical events, great thinkers,
+      and the remarkable discoveries that shaped our world.
+    </p>
+    <a class="ancient-btn" href="#quizGrid">Explore Quizzes →</a>
+  </div>
+</section>
+
+<!-- SECTION 2: ARCANUM -->
+<section class="ancient-section">
+  <img
+    class="ancient-image"
+    src="images/ancient-scrolls.jpg"
+    alt="Ancient scrolls and historical manuscripts"
+    loading="lazy"
+  >
+
+  <div class="ancient-content">
+    <span class="ancient-label">Lost Knowledge</span>
+    <h2>Arcanum</h2>
+    <p>
+      Discover ancient manuscripts, forgotten knowledge, historical
+      mysteries, and fascinating stories from the past.
+    </p>
+    <a class="ancient-btn" href="#quizGrid">Explore Quizzes →</a>
+  </div>
+</section>
+
+<!-- SECTION 3: CODEX ATHENA -->
+<section class="ancient-section">
+  <img
+    class="ancient-image"
+    src="images/greek-philosophy.jpg"
+    alt="Classical Greek architecture and philosophy"
+    loading="lazy"
+  >
+
+  <div class="ancient-content">
+    <span class="ancient-label">Philosophy & Wisdom</span>
+    <h2>Codex Athena</h2>
+    <p>
+      Learn about ancient philosophy, logic, classical literature,
+      wisdom traditions, and influential thinkers.
+    </p>
+    <a class="ancient-btn" href="#quizGrid">Explore Quizzes →</a>
+  </div>
+</section>
+
+<!-- SECTION 4: CHRONICLE OF WISDOM -->
+<section class="ancient-section">
+  <img
+    class="ancient-image"
+    src="images/ancient-map.jpg"
+    alt="Antique map and historical exploration"
+    loading="lazy"
+  >
+
+  <div class="ancient-content">
+    <span class="ancient-label">History & Discovery</span>
+    <h2>Chronicle of Wisdom</h2>
+    <p>
+      Test your knowledge of world history, ancient geography,
+      historical personalities, and great discoveries.
+    </p>
+    <a class="ancient-btn" href="#quizGrid">Explore Quizzes →</a>
+  </div>
+</section>
     <div class="toolbar">
       <input
         id="search"
