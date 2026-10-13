@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabulary MCQ Test & Result System (Day-43)</title>
+    <style>
+        body {
+            font-family: 'SolaimanLipi', Arial, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 850px;
+            background: #ffffff;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        .question-box {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .question-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .options label {
+            display: block;
+            margin: 8px 0;
+            font-size: 16px;
+            cursor: pointer;
+            color: #555;
+        }
+        .options input {
+            margin-right: 10px;
+        }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            background-color: #27ae60;
+            color: white;
+            padding: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .submit-btn:hover {
+            background-color: #219653;
+        }
+        /* Result and Explanation Styling */
+        #result-section {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: #e8f8f5;
+            border: 2px solid #27ae60;
+            border-radius: 8px;
+        }
+        .score-card {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .explanation {
+            font-size: 14px;
+            color: #e74c3c;
+            margin-top: 5px;
+            display: none;
+            background: #fadbd8;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        .correct-ans {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .wrong-ans {
+            color: #c0392b;
+            font-weight: bold;
+        }
+        .examiner-box {
+            margin-top: 40px;
+            padding: 15px;
+            background: #fcf3cf;
+            border: 1px dashed #f39c12;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Vocabulary MCQ Test</h1>
+    <p style="text-align: center; color: #666;">পিডিএফ-এর শব্দভাণ্ডার ভিত্তিক ৩০টি প্রশ্ন। সাবমিট করার পর ফলাফল ও ব্যাখ্যা দেখতে পাবেন।</p>
+    
+    <form id="quizForm">
+
+        <!-- Question 1 -->
+        <div class="question-box" data-correct="B">
+            <div class="question-title">১. What is the meaning of 'Skepticism'?</div>
+            <div class="options">
+                <label><input type="radio" name="q1" value="A"> ক) বিশ্বাস ও আস্থা</label>
+                <label><input type="radio" name="q1" value="B"> খ) সংশয়বাদ, সন্দেহপ্রবণতা</label>
+                <label><input type="radio" name="q1" value="C"> গ) দুঃসাহস</label>
+                <label><input type="radio" name="q1" value="D"> ঘ) তৃপ্তি</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: খ) সংশয়বাদ, সন্দেহপ্রবণতা। (পিডিএফ অনুযায়ী Skepticism অর্থ সংশয়বাদ বা সন্দেহপ্রবণতা)।</div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="question-box" data-correct="C">
+            <div class="question-title">২. What is the synonym of 'Audacity'?</div>
+            <div class="options">
+                <label><input type="radio" name="q2" value="A"> ক) Timidity</label>
+                <label><input type="radio" name="q2" value="B"> খ) Cowardice</label>
+                <label><input type="radio" name="q2" value="C"> গ) Boldness, Daring</label>
+                <label><input type="radio" name="q2" value="D"> ঘ) Calmness</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: গ) Boldness, Daring। (Audacity এর সমার্থক শব্দ Boldness, Daring)।</div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="question-box" data-correct="C">
+            <div class="question-title">৩. What is the antonym of 'Plausibility'?</div>
+            <div class="options">
+                <label><input type="radio" name="q3" value="A"> ক) Credibility</label>
+                <label><input type="radio" name="q3" value="B"> খ) Believability</label>
+                <label><input type="radio" name="q3" value="C"> গ) Implausibility, Unlikelihood</label>
+                <label><input type="radio" name="q3" value="D"> ঘ) Certainty</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: গ) Implausibility, Unlikelihood।</div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="question-box" data-correct="A">
+            <div class="question-title">৪. 'Conviction' শব্দের বাংলা অর্থ কী?</div>
+            <div class="options">
+                <label><input type="radio" name="q4" value="A"> ক) দৃঢ় বিশ্বাস, দণ্ডাদেশ</label>
+                <label><input type="radio" name="q4" value="B"> খ) সন্দেহ, দ্বিধা</label>
+                <label><input type="radio" name="q4" value="C"> গ) অবাধ্যতা</label>
+                <label><input type="radio" name="q4" value="D"> ঘ) ক্ষতিকর</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: ক) দৃঢ় বিশ্বাস, দণ্ডাদেশ।</div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="question-box" data-correct="C">
+            <div class="question-title">৫. What is the synonym of 'Harmony'?</div>
+            <div class="options">
+                <label><input type="radio" name="q5" value="A"> ক) Discord</label>
+                <label><input type="radio" name="q5" value="B"> খ) Conflict</label>
+                <label><input type="radio" name="q5" value="C"> গ) Concord, Accord</label>
+                <label><input type="radio" name="q5" value="D"> ঘ) Confusion</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: গ) Concord, Accord।</div>
+        </div>
+
+        <!-- Question 6 -->
+        <div class="question-box" data-correct="B">
+            <div class="question-title">৬. 'Glow' শব্দের অর্থ নিচের কোনটি?</div>
+            <div class="options">
+                <label><input type="radio" name="q6" value="A"> ক) মলিনতা</label>
+                <label><input type="radio" name="q6" value="B"> খ) খুশিতে ঝলমল করা, আভা</label>
+                <label><input type="radio" name="q6" value="C"> গ) ক্ষীণ আলো</label>
+                <label><input type="radio" name="q6" value="D"> ঘ) অন্ধকার</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: খ) খুশিতে ঝলমল করা, আভা।</div>
+        </div>
+
+        <!-- Question 7 -->
+        <div class="question-box" data-correct="C">
+            <div class="question-title">৭. What is the antonym of 'Mild'?</div>
+            <div class="options">
+                <label><input type="radio" name="q7" value="A"> ক) Gentle</label>
+                <label><input type="radio" name="q7" value="B"> খ) Soft</label>
+                <label><input type="radio" name="q7" value="C"> গ) Harsh, Severe</label>
+                <label><input type="radio" name="q7" value="D"> ঘ) Calm</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: গ) Harsh, Severe।</div>
+        </div>
+
+        <!-- Question 8 -->
+        <div class="question-box" data-correct="B">
+            <div class="question-title">৮. 'Untamed' শব্দের বাংলা অর্থ কী?</div>
+            <div class="options">
+                <label><input type="radio" name="q8" value="A"> ক) বশ মানানো</label>
+                <label><input type="radio" name="q8" value="B"> খ) অশান্ত/বন্য, অদম্য</label>
+                <label><input type="radio" name="q8" value="C"> গ) নিয়ন্ত্রিত</label>
+                <label><input type="radio" name="q8" value="D"> ঘ) অনুগত</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: খ) অশান্ত/বন্য, অদম্য।</div>
+        </div>
+
+        <!-- Question 9 -->
+        <div class="question-box" data-correct="A">
+            <div class="question-title">৯. What is the synonym of 'Feeble'?</div>
+            <div class="options">
+                <label><input type="radio" name="q9" value="A"> ক) Weak, Frail</label>
+                <label><input type="radio" name="q9" value="B"> খ) Strong</label>
+                <label><input type="radio" name="q9" value="C"> গ) Robust</label>
+                <label><input type="radio" name="q9" value="D"> ঘ) Powerful</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: ক) Weak, Frail।</div>
+        </div>
+
+        <!-- Question 10 -->
+        <div class="question-box" data-correct="C">
+            <div class="question-title">১০. What is the antonym of 'Unruly'?</div>
+            <div class="options">
+                <label><input type="radio" name="q10" value="A"> ক) Disorderly</label>
+                <label><input type="radio" name="q10" value="B"> খ) Rebellious</label>
+                <label><input type="radio" name="q10" value="C"> গ) Obedient, Disciplined</label>
+                <label><input type="radio" name="q10" value="D"> ঘ) Disruptive</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: গ) Obedient, Disciplined।</div>
+        </div>
+
+        <!-- Question 11 -->
+        <div class="question-box" data-correct="B">
+            <div class="question-title">১১. 'Compliance' শব্দের বাংলা অর্থ কোনটি?</div>
+            <div class="options">
+                <label><input type="radio" name="q11" value="A"> ক) অবাধ্যতা</label>
+                <label><input type="radio" name="q11" value="B"> খ) সম্মতি/প্রতিপালন, অনুসরণ</label>
+                <label><input type="radio" name="q11" value="C"> গ) প্রতিরোধ</label>
+                <label><input type="radio" name="q11" value="D"> ঘ) বিরোধিতা</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: খ) সম্মতি/প্রতিপালন, অনুসরণ।</div>
+        </div>
+
+        <!-- Question 12 -->
+        <div class="question-box" data-correct="C">
+            <div class="question-title">১২. What is the synonym of 'Adverse'?</div>
+            <div class="options">
+                <label><input type="radio" name="q12" value="A"> ক) Favorable</label>
+                <label><input type="radio" name="q12" value="B"> খ) Beneficial</label>
+                <label><input type="radio" name="q12" value="C"> গ) Unfavorable, Detrimental</label>
+                <label><input type="radio" name="q12" value="D"> ঘ) Safe</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: গ) Unfavorable, Detrimental।</div>
+        </div>
+
+        <!-- Question 13 -->
+        <div class="question-box" data-correct="B">
+            <div class="question-title">১৩. What does the idiom 'In deep water' mean?</div>
+            <div class="options">
+                <label><input type="radio" name="q13" value="A"> ক) সাঁতার কাটা</label>
+                <label><input type="radio" name="q13" value="B"> খ) বিপদে থাকা</label>
+                <label><input type="radio" name="q13" value="C"> গ) নিরাপদ থাকা</label>
+                <label><input type="radio" name="q13" value="D"> ঘ) আনন্দ করা</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: খ) বিপদে থাকা।</div>
+        </div>
+
+        <!-- Question 14 -->
+        <div class="question-box" data-correct="C">
+            <div class="question-title">১৪. What is the antonym of 'Hostile'?</div>
+            <div class="options">
+                <label><input type="radio" name="q14" value="A"> ক) Aggressive</label>
+                <label><input type="radio" name="q14" value="B"> খ) Antagonistic</label>
+                <label><input type="radio" name="q14" value="C"> গ) Friendly, Amiable</label>
+                <label><input type="radio" name="q14" value="D"> ঘ) Opposing</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: গ) Friendly, Amiable।</div>
+        </div>
+
+        <!-- Question 15 -->
+        <div class="question-box" data-correct="A">
+            <div class="question-title">১৫. 'Brevity' শব্দের বাংলা অর্থ কী?</div>
+            <div class="options">
+                <label><input type="radio" name="q15" value="A"> ক) সংক্ষিপ্ত ভাবে (কথন), স্বল্পতা</label>
+                <label><input type="radio" name="q15" value="B"> খ) দীর্ঘতা</label>
+                <label><input type="radio" name="q15" value="C"> গ) বাক্যবাগীশতা</label>
+                <label><input type="radio" name="q15" value="D"> ঘ) বিস্তারিত বর্ণনা</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: ক) সংক্ষিপ্ত ভাবে (কথন), স্বল্পতা।</div>
+        </div>
+
+        <!-- Question 16 -->
+        <div class="question-box" data-correct="A">
+            <div class="question-title">১৬. What is the synonym of 'Wallet'?</div>
+            <div class="options">
+                <label><input type="radio" name="q16" value="A"> ক) Purse, Billfold</label>
+                <label><input type="radio" name="q16" value="B"> খ) Box</label>
+                <label><input type="radio" name="q16" value="C"> গ) Bag</label>
+                <label><input type="radio" name="q16" value="D"> ঘ) Pocket</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: ক) Purse, Billfold।</div>
+        </div>
+
+        <!-- Question 17 -->
+        <div class="question-box" data-correct="B">
+            <div class="question-title">১৭. 'Tomb' শব্দের বাংলা অর্থ কোনটি?</div>
+            <div class="options">
+                <label><input type="radio" name="q17" value="A"> ক) প্রাসাদ</label>
+                <label><input type="radio" name="q17" value="B"> খ) কবর, সমাধি</label>
+                <label><input type="radio" name="q17" value="C"> গ) গুহা</label>
+                <label><input type="radio" name="q17" value="D"> ঘ) মিনার</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: খ) কবর, সমাধি।</div>
+        </div>
+
+        <!-- Question 18 -->
+        <div class="question-box" data-correct="C">
+            <div class="question-title">১৮. What is the antonym of 'Flexible'?</div>
+            <div class="options">
+                <label><input type="radio" name="q18" value="A"> ক) Pliable</label>
+                <label><input type="radio" name="q18" value="B"> খ) Adaptable</label>
+                <label><input type="radio" name="q18" value="C"> গ) Rigid, Inflexible</label>
+                <label><input type="radio" name="q18" value="D"> ঘ) Soft</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: গ) Rigid, Inflexible।</div>
+        </div>
+
+        <!-- Question 19 -->
+        <div class="question-box" data-correct="C">
+            <div class="question-title">১৯. What is the synonym of 'Obese'?</div>
+            <div class="options">
+                <label><input type="radio" name="q19" value="A"> ক) Slim</label>
+                <label><input type="radio" name="q19" value="B"> খ) Lean</label>
+                <label><input type="radio" name="q19" value="C"> গ) Overweight, Corpulent</label>
+                <label><input type="radio" name="q19" value="D"> ঘ) Thin</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: গ) Overweight, Corpulent।</div>
+        </div>
+
+        <!-- Question 20 -->
+        <div class="question-box" data-correct="A">
+            <div class="question-title">২০. 'Tough/Rigid' শব্দের বাংলা অর্থ কী?</div>
+            <div class="options">
+                <label><input type="radio" name="q20" value="A"> ক) শক্ত, অনমনীয়</label>
+                <label><input type="radio" name="q20" value="B"> খ) কোমল</label>
+                <label><input type="radio" name="q20" value="C"> গ) ভঙ্গুর</label>
+                <label><input type="radio" name="q20" value="D"> ঘ) দুর্বল</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: ক) শক্ত, অনমনীয়।</div>
+        </div>
+
+        <!-- Question 21 -->
+        <div class="question-box" data-correct="C">
+            <div class="question-title">২১. What is the antonym of 'Breakable'?</div>
+            <div class="options">
+                <label><input type="radio" name="q21" value="A"> ক) Fragile</label>
+                <label><input type="radio" name="q21" value="B"> খ) Brittle</label>
+                <label><input type="radio" name="q21" value="C"> গ) Unbreakable, Durable</label>
+                <label><input type="radio" name="q21" value="D"> ঘ) Weak</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: গ) Unbreakable, Durable।</div>
+        </div>
+
+        <!-- Question 22 -->
+        <div class="question-box" data-correct="B">
+            <div class="question-title">২২. 'Complacency' শব্দের বাংলা অর্থ কোনটি?</div>
+            <div class="options">
+                <label><input type="radio" name="q22" value="A"> ক) সচেতনতা</label>
+                <label><input type="radio" name="q22" value="B"> খ) আত্মতৃপ্তি, আত্মসন্তুষ্টি</label>
+                <label><input type="radio" name="q22" value="C"> গ) উদ্বেগ</label>
+                <label><input type="radio" name="q22" value="D"> ঘ) ভয়</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: খ) আত্মতৃপ্তি, আত্মসন্তুষ্টি।</div>
+        </div>
+
+        <!-- Question 23 -->
+        <div class="question-box" data-correct="A">
+            <div class="question-title">২৩. What is the meaning of 'Conger'?</div>
+            <div class="options">
+                <label><input type="radio" name="q23" value="A"> ক) সামুদ্রিক বানমাছ</label>
+                <label><input type="radio" name="q23" value="B"> খ) হাঙ্গর</label>
+                <label><input type="radio" name="q23" value="C"> গ) কচ্ছপ</label>
+                <label><input type="radio" name="q23" value="D"> ঘ) তিমি</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: ক) সামুদ্রিক বানমাছ।</div>
+        </div>
+
+        <!-- Question 24 -->
+        <div class="question-box" data-correct="C">
+            <div class="question-title">২৪. What is the synonym of 'Dispatch'?</div>
+            <div class="options">
+                <label><input type="radio" name="q24" value="A"> ক) Retain</label>
+                <label><input type="radio" name="q24" value="B"> খ) Delay</label>
+                <label><input type="radio" name="q24" value="C"> গ) Send, Expedite</label>
+                <label><input type="radio" name="q24" value="D"> ঘ) Hold</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: গ) Send, Expedite।</div>
+        </div>
+
+        <!-- Question 25 -->
+        <div class="question-box" data-correct="C">
+            <div class="question-title">২৫. What is the antonym of 'Postulate'?</div>
+            <div class="options">
+                <label><input type="radio" name="q25" value="A"> ক) Assume</label>
+                <label><input type="radio" name="q25" value="B"> খ) Hypothesize</label>
+                <label><input type="radio" name="q25" value="C"> গ) Deny, Reject</label>
+                <label><input type="radio" name="q25" value="D"> ঘ) Accept</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: গ) Deny, Reject।</div>
+        </div>
+
+        <!-- Question 26 -->
+        <div class="question-box" data-correct="B">
+            <div class="question-title">২৬. 'Invisible' শব্দের বাংলা অর্থ কী?</div>
+            <div class="options">
+                <label><input type="radio" name="q26" value="A"> ক) দৃশ্যমান</label>
+                <label><input type="radio" name="q26" value="B"> খ) অদৃশ্য</label>
+                <label><input type="radio" name="q26" value="C"> গ) প্রকাশ্য</label>
+                <label><input type="radio" name="q26" value="D"> ঘ) স্পষ্ট</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: খ) অদৃশ্য।</div>
+        </div>
+
+        <!-- Question 27 -->
+        <div class="question-box" data-correct="A">
+            <div class="question-title">২৭. What is the synonym of 'Inevitable'?</div>
+            <div class="options">
+                <label><input type="radio" name="q27" value="A"> ক) Unavoidable, Inescapable</label>
+                <label><input type="radio" name="q27" value="B"> খ) Avoidable</label>
+                <label><input type="radio" name="q27" value="C"> গ) Preventable</label>
+                <label><input type="radio" name="q27" value="D"> ঘ) Uncertain</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: ক) Unavoidable, Inescapable।</div>
+        </div>
+
+        <!-- Question 28 -->
+        <div class="question-box" data-correct="C">
+            <div class="question-title">২৮. 'Inaudible' শব্দের বাংলা অর্থ কোনটি?</div>
+            <div class="options">
+                <label><input type="radio" name="q28" value="A"> ক) শ্রবণযোগ্য</label>
+                <label><input type="radio" name="q28" value="B"> খ) জোরে শব্দ</label>
+                <label><input type="radio" name="q28" value="C"> গ) যা শোনা যায় না, অশ্রাব্য</label>
+                <label><input type="radio" name="q28" value="D"> ঘ) স্পষ্ট কণ্ঠ</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: গ) যা শোনা যায় না, অশ্রাব্য।</div>
+        </div>
+
+        <!-- Question 29 -->
+        <div class="question-box" data-correct="C">
+            <div class="question-title">২৯. What is the antonym of 'Irresistible'?</div>
+            <div class="options">
+                <label><input type="radio" name="q29" value="A"> ক) Compelling</label>
+                <label><input type="radio" name="q29" value="B"> খ) Overpowering</label>
+                <label><input type="radio" name="q29" value="C"> গ) Resistible, Avoidable</label>
+                <label><input type="radio" name="q29" value="D"> ঘ) Tempting</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: গ) Resistible, Avoidable।</div>
+        </div>
+
+        <!-- Question 30 -->
+        <div class="question-box" data-correct="B">
+            <div class="question-title">৩০. 'Expose/Reveal/Uncover/Unearth' শব্দের সমার্থক শব্দ (Synonyms) নিচের কোনটি?</div>
+            <div class="options">
+                <label><input type="radio" name="q30" value="A"> ক) Conceal, Hide</label>
+                <label><input type="radio" name="q30" value="B"> খ) Disclose, Unveil</label>
+                <label><input type="radio" name="q30" value="C"> গ) Cover, Wrap</label>
+                <label><input type="radio" name="q30" value="D"> ঘ) Bury</label>
+            </div>
+            <div class="explanation">সঠিক উত্তর: খ) Disclose, Unveil।</div>
+        </div>
+
+        <button type="button" class="submit-btn" onclick="submitQuiz()">উত্তর জমা দিন (Submit Test)</button>
+    </form>
+
+    <!-- Result Section for Examinee and Examiner -->
+    <div id="result-section">
+        <h2>পরীক্ষার ফলাফল (Test Evaluation Report)</h2>
+        <div class="score-card" id="scoreCard"></div>
+        
+        <div class="examiner-box">
+            <h3>Examiner / Teacher Panel Summary</h3>
+            <p id="examinerSummary"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function submitQuiz() {
+        let totalQuestions = 30;
+        let correctCount = 0;
+        let wrongCount = 0;
+        let unansweredCount = 0;
+
+        let questionBoxes = document.querySelectorAll('.question-box');
+
+        questionBoxes.forEach((box, index) => {
+            let qNum = index + 1;
+            let correctAnswer = box.getAttribute('data-correct');
+            let selectedOption = document.querySelector(`input[name="q${qNum}"]:checked`);
+            let explanationDiv = box.querySelector('.explanation');
+
+            // Disable all inputs after submission (Lock answers)
+            let inputs = box.querySelectorAll('input');
+            inputs.forEach(input => input.disabled = true);
+
+            // Show explanation
+            explanationDiv.style.display = 'block';
+
+            if (selectedOption) {
+                let userVal = selectedOption.value;
+                if (userVal === correctAnswer) {
+                    correctCount++;
+                    selectedOption.parentElement.style.color = '#27ae60';
+                    selectedOption.parentElement.style.fontWeight = 'bold';
+                } else {
+                    wrongCount++;
+                    selectedOption.parentElement.style.color = '#c0392b';
+                    selectedOption.parentElement.style.fontWeight = 'bold';
+                }
+            } else {
+                unansweredCount++;
+            }
+        });
+
+        // Hide submit button after submission
+        document.querySelector('.submit-btn').style.display = 'none';
+
+        // Show result section
+        let resultSection = document.getElementById('result-section');
+        resultSection.style.display = 'block';
+
+        // Display Score for Examinee
+        let scoreCard = document.getElementById('scoreCard');
+        scoreCard.innerHTML = `
+            মোট প্রশ্ন: ${totalQuestions} | 
+            <span class="correct-ans">সঠিক: ${correctCount}</span> | 
+            <span class="wrong-ans">ভুল: ${wrongCount}</span> | 
+            উত্তরহীন: ${unansweredCount} <br>
+            প্রাপ্ত নম্বর (Marks): ${correctCount} / ${totalQuestions} (${((correctCount/totalQuestions)*100).toFixed(2)}%)
+        `;
+
+        // Display Examiner Summary
+        let examinerSummary = document.getElementById('examinerSummary');
+        examinerSummary.innerHTML = `
+            <strong>পরীক্ষার্থী স্ট্যাটাস:</strong> মূল্যায়ন সম্পন্ন হয়েছে।<br>
+            <strong>সঠিক উত্তরের হার:</strong> ${((correctCount/totalQuestions)*100).toFixed(1)}%<br>
+            পরীক্ষার্থী প্রতিটি প্রশ্নের সঠিক উত্তর এবং লাল মার্ক করা ভুল অপশনগুলোর সাথে নিচে দেওয়া ব্যাখ্যা (Explanation) দেখতে পাচ্ছে।
+        `;
+
+        // Scroll to result
+        resultSection.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Vocabulary MCQ Exam Center (Day-44)</title>
+    <style>
+        body {
+            font-family: 'SolaimanLipi', Arial, sans-serif;
+            background-color: #f0f3f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 850px;
+            background: #ffffff;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1, h2 { text-align: center; color: #2c3e50; }
+        .setup-panel {
+            background: #ebf5fb;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border: 1px solid #aed6f1;
+        }
+        .setup-group {
+            margin-bottom: 15px;
+        }
+        .setup-group label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .setup-group select, .setup-group button {
+            padding: 8px 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .start-btn {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .start-btn:hover { background-color: #1f618d; }
+        
+        #exam-body { display: none; }
+        .timer-box {
+            font-size: 18px;
+            font-weight: bold;
+            color: #c0392b;
+            text-align: right;
+            margin-bottom: 15px;
+        }
+        .question-box {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .question-title {
+            font-size: 17px;
+            font-weight: bold;
+            color: #34495e;
+            margin-bottom: 10px;
+        }
+        .options label {
+            display: block;
+            margin: 6px 0;
+            font-size: 15px;
+            cursor: pointer;
+            color: #555;
+        }
+        .options input { margin-right: 10px; }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            background-color: #27ae60;
+            color: white;
+            padding: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .submit-btn:hover { background-color: #219653; }
+        
+        /* Result Section */
+        #result-section {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: #e8f8f5;
+            border: 2px solid #27ae60;
+            border-radius: 8px;
+        }
+        .score-card {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .explanation {
+            font-size: 14px;
+            color: #900C3F;
+            margin-top: 8px;
+            display: none;
+            background: #fadbd8;
+            padding: 8px;
+            border-radius: 4px;
+            border-left: 4px solid #c0392b;
+        }
+        .examiner-box {
+            margin-top: 30px;
+            padding: 15px;
+            background: #fcf3cf;
+            border: 1px dashed #f39c12;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Vocabulary Virtual Exam Center (Day-44)</h1>
+    
+    <!-- Setup Panel for User Configuration -->
+    <div class="setup-panel" id="setupPanel">
+        <h3>পরীক্ষার সেটিংস কনফিগার করুন</h3>
+        <div class="setup-group">
+            <label for="qCount">প্রশ্নের সংখ্যা নির্বাচন করুন:</label>
+            <select id="qCount">
+                <option value="10">১০টি প্রশ্ন</option>
+                <option value="20">২০টি প্রশ্ন</option>
+                <option value="30">৩০টি প্রশ্ন</option>
+                <option value="50" selected>৫০টি প্রশ্ন</option>
+            </select>
+        </div>
+        <div class="setup-group">
+            <label for="timeLimit">সময়সীমা (মিনিট):</label>
+            <select id="timeLimit">
+		<option value="180">No limit</option>
+
+                <option value="1">১ মিনিট</option>
+                <option value="5">৫ মিনিট</option>
+                <option value="10" selected>১০ মিনিট</option>
+                <option value="15">১৫ মিনিট</option>
+            </select>
+        </div>
+        <button class="start-btn" onclick="startExam()">পরীক্ষা শুরু করুন</button>
+    </div>
+
+    <!-- Exam Body -->
+    <div id="exam-body">
+        <div class="timer-box" id="timerDisplay">সময় বাকি: <span id="time">10:00</span></div>
+        <form id="quizForm">
+            <div id="questionsContainer"></div>
+            <button type="button" class="submit-btn" onclick="submitQuiz()">উত্তর জমা দিন (Submit Test)</button>
+        </form>
+    </div>
+
+    <!-- Result Section -->
+    <div id="result-section">
+        <h2>মূল্যায়ন ও ফলাফল প্রতিবেদন (Result Dashboard)</h2>
+        <div class="score-card" id="scoreCard"></div>
+        
+        <div class="examiner-box">
+            <h3>Examiner & Examinee Combined Summary Panel</h3>
+            <p id="examinerSummary"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Master Question Bank (50 Questions covering Meanings, Fill in the gaps, Synonyms, Antonyms)
+    const allQuestions = [
+        { q: "১. What is the meaning of 'Inadvertent'?", opts: ["ক) ইচ্ছাকৃত", "খ) অনিচ্ছাকৃত", "গ) সচেতন", "ঘ) পরিকল্পিত"], ans: "খ", exp: "Inadvertent অর্থ অনিচ্ছাকৃত বা যা পরিকল্পনা ছাড়া ঘটে।" },
+        { q: "২. What is the synonym of 'Intentional'?", opts: ["ক) Accidental", "খ) Deliberate, Willful", "গ) Unplanned", "ঘ) Unforeseen"], ans: "খ", exp: "Intentional এর সমার্থক শব্দ Deliberate বা Willful।" },
+        { q: "৩. Fill in the gaps: 'It was an ____ discovery.' (Accidental)", opts: ["ক) intentional", "খ) accidental", "গ) planned", "ঘ) deliberate"], ans: "খ", exp: "পিডিএফ অনুযায়ী এটি একটি accidental (আকস্মিক) আবিষ্কার ছিল।" },
+        { q: "৪. What is the antonym of 'Accidental'?", opts: ["ক) Unplanned", "খ) Unforeseen", "গ) Intended, Planned", "ঘ) Random"], ans: "গ", exp: "Accidental (দুর্ঘটনাজনিত)-এর বিপরীত হলো Intended বা Planned।" },
+        { q: "৫. 'Gratifying' শব্দের বাংলা অর্থ কোনটি?", opts: ["ক) হতাশাজনক", "খ) তৃপ্তিদায়ক, সন্তোষজনক", "গ) বিরক্তিকর", "ঘ) ক্ষতিকর"], ans: "খ", exp: "Gratifying অর্থ তৃপ্তিদায়ক বা সন্তোষজনক।" },
+        { q: "৬. What is the synonym of 'Gracious'?", opts: ["ক) Rude", "খ) Unkind", "গ) Courteous, Kind", "ঘ) Cruel"], ans: "গ", exp: "Gracious মানে ভদ্র ও দয়ালু (Courteous, Kind)।" },
+        { q: "৭. 'Splendid' শব্দের সমার্থক শব্দ কোনটি?", opts: ["কম) Mediocre", "খ) Magnificent, Superb", "গ) Inferior", "ঘ) Poor"], ans: "খ", exp: "Splendid-এর সমার্থক Magnificent বা Superb।" },
+        { q: "৮. What is the antonym of 'Disgraceful'?", opts: ["ক) Shameful", "খ) Dishonorable", "গ) Honorable, Respectable", "ঘ) Bad"], ans: "গ", exp: "Disgraceful (ল লজ্জাজনক)-এর বিপরীত হলো সম্মানজনক (Honorable)।" },
+        { q: "৯. 'Conceal' শব্দের অর্থ কী?", opts: ["ক) প্রকাশ করা", "খ) গোপন করা, লুকানো", "গ) উন্মোচন করা", "ঘ) দেখানো"], ans: "খ", exp: "Conceal অর্থ গোপন করা বা লুকানো।" },
+        { q: "১০. What is the antonym of 'Conciliate'?", opts: ["কম) Reconcile", "খ) Pacify", "গ) Antagonize, Alienate", "ঘ) Calm"], ans: "গ", exp: "Conciliate (শান্ত করা)-এর বিপরীত হলো Antagonize বা বিরোধ সৃষ্টি করা।" },
+        { q: "১১. 'Benevolent' শব্দের বাংলা অর্থ কী?", opts: ["ক) নিষ্ঠুর", "খ) হিতৈষী, দয়ালু", "গ) স্বার্থপর", "ঘ) অহংকারী"], ans: "খ", exp: "Benevolent মানে হিতৈষী বা দয়ালু।" },
+        { q: "১২. What is the synonym of 'Curious'?", opts: ["ক) Indifferent", "খ) Apathetic", "গ) Inquisitive, Inquiring", "ঘ) Uninterested"], ans: "গ", exp: "Curious অর্থ কৌতূহলী বা অনুসন্ধানী (Inquisitive)।" },
+        { q: "১৩. 'Flashy' শব্দের বিপরীত শব্দ (Antonym) কোনটি?", opts: ["ক) Ostentatious", "খ) Gaudy", "গ) Modest, Simple", "ঘ) Bright"], ans: "গ", exp: "Flashy (চটকদার)-এর বিপরীত হলো বিনম্র ও সাধারণ (Modest, Simple)।" },
+        { q: "১৪. What is the meaning of 'Velocity'?", opts: ["ক) গতি বা বেগ", "খ) স্থবিরতা", "গ) বিলম্ব", "ঘ) ধীরগতি"], ans: "কম", exp: "Velocity হলো নির্দিষ্ট দিকে কোনো কিছুর গতি বা বেগ।" },
+        { q: "১৫. 'Doctrine' শব্দের বাংলা অর্থ কী?", opts: ["ক) ধর্মভ্রষ্টতা", "খ) মতবাদ, নীতি", "গ) অবিশ্বাস", "ঘ) সংশয়"], ans: "খ", exp: "Doctrine অর্থ দলীয় বা প্রাতিষ্ঠানিক মতবাদ ও নীতি।" },
+        { q: "১৬. What is the synonym of 'Expound'?", opts: ["ক) Confuse", "খ) Obscure", "গ) Explain, Elucidate", "ঘ) Hide"], ans: "গ", exp: "Expound অর্থ বিশদভাবে ব্যাখ্যা করা বা পরিষ্কার করা।" },
+        { q: "১৭. 'Confound' শব্দের অর্থ কী?", opts: ["ক) পরিষ্কার করা", "খ) বিভ্রান্ত করা, হতবুদ্ধি করা", "গ) ব্যাখ্যা করা", "ঘ) সমাধান করা"], ans: "খ", exp: "Confound অর্থ কাউকে বিভ্রান্ত বা হতবুদ্ধি করা।" },
+        { q: "১৮. What is the antonym of 'Perplex'?", opts: ["ক) Puzzle", "খ) Bewilder", "গ) Enlighten, Clarify", "ঘ) Confuse"], ans: "গ", exp: "Perplex (হতভম্ব করা)-এর বিপরীত হলো আলোপাত করা বা স্পষ্ট করা (Enlighten, Clarify)।" },
+        { q: "১৯. 'Multiple' শব্দের সমার্থক শব্দ কোনটি?", opts: ["ক) Single", "খ) Simple", "গ) Numerous, Manifold", "ঘ) Alone"], ans: "গ", exp: "Multiple অর্থ বহুবিধ বা একাধিক (Numerous, Manifold)।" },
+        { q: "২০. What is the meaning of 'Composite'?", opts: ["ক) বিশুদ্ধ", "খ) যৌগিক, মিশ্র", "গ) একক", "ঘ) সাধারণ"], ans: "খ", exp: "Composite অর্থ একাধিক উপাদান মিলিয়ে গঠিত যৌগিক বা মিশ্র বস্তু।" },
+        { q: "২১. 'Barter' শব্দের বাংলা অর্থ কী?", opts: ["ক) ক্রয় করা", "খ) পণ্য বিনিময়", "গ) নগদ বিক্রি", "ঘ) উপহার দেওয়া"], ans: "খ", exp: "Barter হলো মুদ্রা ব্যবহার না করে পণ্য বা সেবা বিনিময় করা।" },
+        { q: "২২. What is the synonym of 'Transient'?", opts: ["ক) Permanent", "খ) Lasting", "গ) Temporary, Fleeting", "ঘ) Eternal"], ans: "গ", exp: "Transient অর্থ অস্থায়ী বা ক্ষণস্থায়ী (Temporary, Fleeting)।" },
+        { q: "২৩. 'Relevant' শব্দের বিপরীত শব্দ কোনটি?", opts: ["ক) Pertinent", "খ) Applicable", "গ) Irrelevant, Immaterial", "ঘ) Suitable"], ans: "গ", exp: "Relevant (প্রাসঙ্গিক)-এর বিপরীত হলো Irrelevant (অপ্রাসঙ্গিক)।" },
+        { q: "২৪. What is the meaning of 'Enlarge'?", opts: ["ক) ছোট করা", "খ) দীর্ঘায়িত করা, বড় করা", "গ) কমানো", "ঘ) সংকুচিত করা"], ans: "খ", exp: "Enlarge অর্থ কোনো কিছু বড় বা প্রশস্ত করা।" },
+        { q: "২৫. Fill in the gaps: 'The sweater ____ after washing.' (Shrink)", opts: ["ক) expanded", "খ) enlarged", "গ) shrank", "ঘ) grew"], ans: "গ", exp: "পিডিএফ অনুযায়ী ধোয়ার পর সোয়েটার সংকুচিত বা ছোট হয়ে যায় (shrank)।" },
+        { q: "২৬. 'Slip' শব্দের অর্থ নিচের কোনটি?", opts: ["ক) শক্ত করে ধরা", "খ) পিছলে পড়া / কথার ভুল", "গ) আক্রমণ করা", "ঘ) জয় করা"], ans: "খ", exp: "Slip অর্থ পিছলে পড়া বা অনিচ্ছাকৃতভাবে পিছলে যাওয়া।" },
+        { q: "২৭. What is the synonym of 'Pact'?", opts: ["কম) Disagreement", "খ) Conflict", "গ) Agreement, Treaty", "ঘ) Dispute"], ans: "গ", exp: "Pact মানে চুক্তি বা সমঝোতা (Agreement, Treaty)।" },
+        { q: "২৮. 'Expand' শব্দের অর্থ কী?", opts: ["ক) সংকুচিত করা", "খ) বিস্তৃত করা, প্রসারিত করা", "গ) কমানো", "ঘ) বন্ধ করা"], ans: "খ", exp: "Expand অর্থ বড় বা প্রসারিত করা।" },
+        { q: "২৯. What is the meaning of 'Repercussion'?", opts: ["কম) প্রতিক্রিয়া, পরিণতি", "খ) কারণ", "গ) উৎস", "ঘ) পূর্বসূরী"], ans: "কম", exp: "Repercussion হলো কোনো কাজের অনিচ্ছাকৃত প্রতিক্রিয়া বা পরিণতি।" },
+        { q: "৩০. 'Aftermath' শব্দের বাংলা অর্থ কী?", opts: ["ক) পূর্ববর্তী ঘটনা", "খ) পরিণাম/ফলাফল, পরবর্তী অবস্থা", "গ) কারণ", "ঘ) সূচনা"], ans: "খ", exp: "Aftermath অর্থ কোনো অপকারী ঘটনার পরবর্তী পরিণতি বা ফলাফল।" },
+        { q: "৩১. What is the synonym of 'Influence'?", opts: ["ক) Insignificance", "খ) Ineffectiveness", "গ) Impact, Effect", "ঘ) Weakness"], ans: "গ", exp: "Influence অর্থ প্রভাব বা কার্যকারিতা (Impact, Effect)।" },
+        { q: "৩২. 'Inadvertent' শব্দের সমার্থক শব্দ কোনটি?", opts: ["ক) Intentional", "খ) Deliberate", "গ) Unintentional, Unplanned", "ঘ) Willful"], ans: "গ", exp: "Inadvertent-এর সমার্থক Unintentional বা Unplanned।" },
+        { q: "৩৩. What is the antonym of 'Benevolent'?", opts: ["ক) Kindhearted", "খ) Compassionate", "গ) Malevolent, Cruel", "ঘ) Friendly"], ans: "গ", exp: "Benevolent (দয়ালু)-এর বিপরীত হলো Malevolent বা ক্রুর।" },
+        { q: "৩৪. 'Flashy' শব্দের সমার্থক শব্দ কোনটি?", opts: ["ক) Modest", "খ) Simple", "গ) Ostentatious, Gaudy", "ঘ) Plain"], ans: "গ", exp: "Flashy অর্থ লোক দেখানো বা চটকদার (Ostentatious, Gaudy)।" },
+        { q: "৩৫. What is the antonym of 'Transient'?", opts: ["ক) Temporary", "খ) Fleeting", "গ) Permanent, Lasting", "ঘ) Brief"], ans: "গ", exp: "Transient (ক্ষণস্থায়ী)-এর বিপরীত হলো স্থায়ী বা চিরস্থায়ী (Permanent, Lasting)।" },
+        { q: "৩৬. 'Conceal' শব্দের বিপরীত শব্দ কী?", opts: ["ক) Hide", "খ) Obscure", "গ) Reveal, Disclose", "ঘ) Cover"], ans: "গ", exp: "Conceal (লুকানো)-এর বিপরীত হলো Reveal বা প্রকাশ করা।" },
+        { q: "৩৭. What is the synonym of 'Velocity'?", opts: ["ক) Slowness", "খ) Delay", "গ) Speed, Rapidity", "ঘ) Pause"], ans: "গ", exp: "Velocity-এর সমার্থক Speed বা Rapidity।" },
+        { q: "৩৮. 'Expound' শব্দের বিপরীত শব্দ কোনটি?", opts: ["ক) Explain", "খ) Elucidate", "গ) Confuse, Obscure", "ঘ) Clarify"], ans: "গ", exp: "Expound (ব্যাখ্যা করা)-এর বিপরীত হলো Confuse বা বিভ্রান্ত করা।" },
+        { q: "৩৯. What is the meaning of 'Composite' antonym?", opts: ["ক) Compound", "খ) Combined", "গ) Simple, Pure", "ঘ) Mixed"], ans: "গ", exp: "Composite (যৌগিক)-এর বিপরীত হলো সাধারণ বা বিশুদ্ধ (Simple, Pure)।" },
+        { q: "৪০. 'Barter' শব্দের সমার্থক শব্দ কোনটি?", opts: ["ক) Buy", "খ) Purchase", "গ) Trade, Exchange", "ঘ) Sell"], ans: "গ", exp: "Barter-এর সমার্থক Trade বা Exchange।" },
+        { q: "৪১. What is the antonym of 'Relevant'?", opts: ["ক) Pertinent", "খ) Applicable", "গ) Irrelevant, Immaterial", "ঘ) Suited"], ans: "গ", exp: "Relevant-এর বিপরীত হলো Irrelevant।" },
+        { q: "৪২. 'Splendid' শব্দের বিপরীত শব্দ কোনটি?", opts: ["ক) Magnificent", "খ) Superb", "গ) Mediocre, Inferior", "ঘ) Brilliant"], ans: "গ", exp: "Splendid-এর বিপরীত সাধারণ বা নিম্নমানের (Mediocre, Inferior)।" },
+        { q: "৪৩. What is the synonym of 'Aftermath'?", opts: ["ক) Cause", "খ) Precursor", "গ) Outcome, Result", "ঘ) Origin"], ans: "গ", exp: "Aftermath-এর সমার্থক Outcome বা Result।" },
+        { q: "৪৪. 'Gracious' শব্দের বিপরীত শব্দ কী?", opts: ["ক) Courteous", "খ) Kind", "গ) Rude, Unkind", "ঘ) Polite"], ans: "গ", exp: "Gracious-এর বিপরীত হলো Rude বা Unkind।" },
+        { q: "৪৫. What is the antonym of 'Influence'?", opts: ["ক) Impact", "খ) Effect", "গ) Insignificance, Ineffectiveness", "ঘ) Power"], ans: "গ", exp: "Influence-এর বিপরীত গুরুত্বহীনতা বা কার্যহীনতা।" },
+        { q: "৪৬. Fill in the gaps: 'The two leaders signed a peace ____.' (Pact)", opts: ["কম) conflict", "খ) pact", "গ) disagreement", "ঘ) fight"], ans: "খ", exp: "দুই নেতা একটি শান্তি চুক্তি (peace pact) স্বাক্ষর করেন।" },
+        { q: "৪৭. What is the synonym of 'Confound'?", opts: ["ক) Clarify", "খ) Explain", "গ) Baffle, Perplex", "ঘ) Clear"], ans: "গ", exp: "Confound-এর সমার্থক Baffle বা Perplex।" },
+        { q: "৪৮. 'Multiple' শব্দের বিপরীত শব্দ কোনটি?", opts: ["ক) Numerous", "খ) Manifold", "গ) Single, Simple", "ঘ) Various"], ans: "গ", exp: "Multiple (বহুবিধ)-এর বিপরীত হলো একক বা সহজ (Single, Simple)।" },
+        { q: "৪৯. What is the antonym of 'Enlarge'?", opts: ["ক) Expand", "খ) Amplify", "গ) Shrink, Reduce", "ঘ) Grow"], ans: "গ", exp: "Enlarge (বড় করা)-এর বিপরীত হলো Shrink বা Reduce (সংকুচিত করা)।" },
+        { q: "৫০. 'Curious' শব্দের বিপরীত শব্দ কোনটি?", opts: ["ক) Inquisitive", "খ) Inquiring", "গ) Indifferent, Apathetic", "ঘ) Eager"], ans: "গ", exp: "Curious (কৌতূহলী)-এর বিপরীত হলো উদাসীন বা নিরুৎসাহী (Indifferent, Apathetic)।" }
+    ];
+
+    let timerInterval;
+    let timeLeft = 600; // default 10 mins
+
+    function startExam() {
+        let qLimit = parseInt(document.getElementById('qCount').value);
+        let timeMin = parseInt(document.getElementById('timeLimit').value);
+        
+        timeLeft = timeMin * 60;
+        
+        // Hide setup, show exam body
+        document.getElementById('setupPanel').style.display = 'none';
+        document.getElementById('exam-body').style.display = 'block';
+
+        // Render questions
+        let container = document.getElementById('questionsContainer');
+        container.innerHTML = '';
+
+        // Shuffle and slice questions based on user selection
+        let selectedQuestions = allQuestions.slice(0, qLimit);
+
+        selectedQuestions.forEach((item, index) => {
+            let qNum = index + 1;
+            let optionsHTML = '';
+            
+            // Map options letters
+            let letters = ['A', 'B', 'C', 'D'];
+            item.opts.forEach((optText, optIdx) => {
+                let optLetter = letters[optIdx];
+                optionsHTML += `<label><input type="radio" name="q${qNum}" value="${optLetter}"> ${optText}</label>`;
+            });
+
+            container.innerHTML += `
+                <div class="question-box" data-correct="${item.ans === 'ক' ? 'A' : item.ans === 'খ' ? 'B' : item.ans === 'গ' ? 'C' : 'D'}">
+                    <div class="question-title">${item.q}</div>
+                    <div class="options">${optionsHTML}</div>
+                    <div class="explanation"><strong>সঠিক উত্তর ও ব্যাখ্যা:</strong> ${item.exp}</div>
+                </div>
+            `;
+        });
+
+        // Start Timer
+        startTimer();
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            document.getElementById('time').innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert('সময় শেষ! আপনার উত্তর স্বয়ংক্রিয়ভাবে জমা হচ্ছে।');
+                submitQuiz();
+            }
+            timeLeft--;
+        }, 1000);
+    }
+
+    function submitQuiz() {
+        clearInterval(timerInterval);
+        
+        let correctCount = 0;
+        let wrongCount = 0;
+        let unansweredCount = 0;
+        let questionBoxes = document.querySelectorAll('.question-box');
+        let totalQ = questionBoxes.length;
+
+        questionBoxes.forEach((box) => {
+            let correctAnswer = box.getAttribute('data-correct');
+            let selectedOption = box.querySelector('input[type="radio"]:checked');
+            let explanationDiv = box.querySelector('.explanation');
+            
+            // Lock all inputs
+            box.querySelectorAll('input').forEach(input => input.disabled = true);
+            
+            // Show explanation
+            explanationDiv.style.display = 'block';
+
+            if (selectedOption) {
+                if (selectedOption.value === correctAnswer) {
+                    correctCount++;
+                    selectedOption.parentElement.style.color = '#27ae60';
+                    selectedOption.parentElement.style.fontWeight = 'bold';
+                } else {
+                    wrongCount++;
+                    selectedOption.parentElement.style.color = '#c0392b';
+                    selectedOption.parentElement.style.fontWeight = 'bold';
+                }
+            } else {
+                unansweredCount++;
+            }
+        });
+
+        // Hide submit button
+        document.querySelector('.submit-btn').style.display = 'none';
+
+        // Show result section
+        let resultSection = document.getElementById('result-section');
+        resultSection.style.display = 'block';
+
+        let percentage = ((correctCount / totalQ) * 100).toFixed(2);
+
+        // Display Score
+        document.getElementById('scoreCard').innerHTML = `
+            মোট প্রশ্ন: ${totalQ} | 
+            সঠিক: <span style="color:#27ae60">${correctCount}</span> | 
+            ভুল: <span style="color:#c0392b">${wrongCount}</span> | 
+            উত্তরহীন: ${unansweredCount} <br>
+            প্রাপ্ত নম্বর (Marks): ${correctCount} / ${totalQ} (${percentage}%)
+        `;
+
+        // Examiner & Examinee Summary
+        document.getElementById('examinerSummary').innerHTML = `
+            <strong>পরীক্ষার্থী মূল্যায়ন:</strong> পরীক্ষা সফলভাবে সম্পন্ন হয়েছে।<br>
+            <strong>পারফরম্যান্স গ্রেড:</strong> ${percentage >= 80 ? 'অত্যন্ত চমৎকার (A+)' : percentage >= 50 ? 'সন্তোষজনক (B)' : 'আরও অধ্যবসায় প্রয়োজন (C)'}。<br>
+            * পরীক্ষার্থী প্রতিটি ভুল উত্তরের নিচে লাল হাইলাইট করা বক্স থেকে সঠিক ব্যাখ্যা দেখে নিতে পারছেন।
+        `;
+
+        resultSection.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
