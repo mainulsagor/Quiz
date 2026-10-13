@@ -151,6 +151,29 @@
             
             grid.appendChild(card);
         }
+       
+    const grid = document.getElementById('story-grid');
+    
+    for (let i = 1; i <= 60; i++) {
+        const card = document.createElement('a');
+        
+        // Option A: Link directly to the PDF file (opens in a new tab)
+        card.href = `pdfs/story-${i}.pdf`; 
+        card.target = "_blank"; // Opens the PDF in a clean browser tab
+        
+        // Option B: If you want to use a shared reader page instead:
+        // card.href = `viewer.html?id=${i}`;
+
+        card.className = 'story-card';
+        
+        card.innerHTML = `
+            <span class="story-number">Story ${i}</span>
+            <span class="story-label">Read PDF</span>
+        `;
+        
+        grid.appendChild(card);
+    }
+
     </script>
 
 </body>
