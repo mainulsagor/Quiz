@@ -134,47 +134,28 @@
         </div>
     </div>
 
-    <script>
-        // Automatically generate buttons for Stories 1 to 60
-        const grid = document.getElementById('story-grid');
-        
-        for (let i = 1; i <= 60; i++) {
-            const card = document.createElement('a');
-            // Link to your viewer page or PDF file (e.g., pdfs/story-1.pdf or viewer.html?id=1)
-            card.href = `viewer.html?id=${i}`; 
-            card.className = 'story-card';
-            
-            card.innerHTML = `
-                <span class="story-number">Story ${i}</span>
-                <span class="story-label">Read PDF</span>
-            `;
-            
-            grid.appendChild(card);
-        }
-       
-    const grid = document.getElementById('story-grid');
+   <script>
+  // Automatically generate buttons for Stories 1 to 60
+  const grid = document.getElementById('story-grid');
+  
+  for (let i = 1; i <= 60; i++) {
+    const card = document.createElement('a');
     
-    for (let i = 1; i <= 60; i++) {
-        const card = document.createElement('a');
-        
-        // Option A: Link directly to the PDF file (opens in a new tab)
-        card.href = `pdfs/story-${i}.pdf`; 
-        card.target = "_blank"; // Opens the PDF in a clean browser tab
-        
-        // Option B: If you want to use a shared reader page instead:
-        // card.href = `viewer.html?id=${i}`;
+    // Choose your correct path format:
+    // Option 1: If using a viewer page
+    card.href = `viewer.html?id=${i}`;
+    
+    // Option 2: If linking directly to PDFs in a folder (uncomment target if needed)
+    // card.href = `pdfs/story-${i}.pdf`;
+    // card.target = "_blank";
 
-        card.className = 'story-card';
-        
-        card.innerHTML = `
-            <span class="story-number">Story ${i}</span>
-            <span class="story-label">Read PDF</span>
-        `;
-        
-        grid.appendChild(card);
-    }
-
-    </script>
-
+    card.className = 'story-card';
+    card.innerHTML = `
+      <span class="story-number">Story ${i}</span>
+      <span class="story-label">Read PDF</span>
+    `;
+    grid.appendChild(card);
+  }
+</script>
 </body>
 </html>
