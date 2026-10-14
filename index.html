@@ -5,15 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Eudaimonia | Learn Through Stories & Quizzes</title>
+  <title>Eudaimonia | Stories, Vocabulary & Quizzes</title>
 
-  <meta name="description" content="Learn vocabulary through stories and practice with 100 days of quizzes.">
+  <meta name="description" content="Learn vocabulary through stories, 100 days of quizzes, 333 Barron's and Word Smart practice.">
 
-  <!-- Existing CSS file -->
   <link rel="stylesheet" href="css/style.css">
 
   <style>
-    /* Home page only */
     body {
       margin: 0;
       min-height: 100vh;
@@ -29,7 +27,7 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 25px;
+      padding: 30px 20px;
       box-sizing: border-box;
     }
 
@@ -40,7 +38,7 @@
     }
 
     .home-description {
-      max-width: 650px;
+      max-width: 680px;
       margin: 0 auto 35px;
       color: #dce8f5;
       font-size: 18px;
@@ -48,38 +46,35 @@
     }
 
     .home-buttons {
-      display: flex;
-      justify-content: center;
-      align-items: stretch;
-      flex-wrap: wrap;
-      gap: 18px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
       width: 100%;
-      max-width: 550px;
+      max-width: 650px;
     }
 
     .home-button {
-      display: inline-flex;
+      display: flex;
       justify-content: center;
       align-items: center;
-      flex: 1 1 220px;
-      min-height: 60px;
-      padding: 12px 20px;
+      gap: 10px;
+      min-height: 75px;
+      padding: 18px 15px;
       box-sizing: border-box;
       border: 2px solid #ffffff;
-      border-radius: 12px;
+      border-radius: 14px;
       background: #ffffff;
       color: #14213d;
       text-decoration: none;
       font-size: 17px;
       font-weight: 700;
-      transition: background 0.2s, color 0.2s,
-                  transform 0.2s;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s, background 0.2s;
     }
 
     .home-button:hover {
       background: #dbeafe;
-      color: #10264a;
-      transform: translateY(-3px);
+      transform: translateY(-4px);
     }
 
     .home-button:focus-visible {
@@ -88,27 +83,24 @@
     }
 
     .home-footer {
-      margin-top: 55px;
+      margin-top: 45px;
       color: #c6d4e5;
       font-size: 14px;
     }
 
-    @media (max-width: 480px) {
-      .home-container {
-        padding: 20px;
+    @media (max-width: 500px) {
+      .home-buttons {
+        grid-template-columns: 1fr;
+        max-width: 360px;
+        gap: 14px;
       }
 
       .home-description {
         font-size: 16px;
       }
 
-      .home-buttons {
-        flex-direction: column;
-      }
-
       .home-button {
-        width: 100%;
-        flex-basis: auto;
+        min-height: 62px;
       }
     }
   </style>
@@ -121,21 +113,27 @@
     <h1>Eudaimonia</h1>
 
     <p class="home-description">
-      Discover the power of ancient knowledge.
-      Improve your vocabulary through memorable stories
-      and challenge yourself with 100 days of quizzes.
+      Discover ancient knowledge, learn vocabulary through
+      memorable stories, and improve your English with
+      structured quizzes and practice tests.
     </p>
 
     <div class="home-buttons">
 
-      <!-- Button 1: Separate Stories page -->
       <a class="home-button" href="stories.html">
         📖 Read Stories
       </a>
 
-      <!-- Button 2: Separate Day 1–100 page -->
       <a class="home-button" href="days.html">
         📝 Day 1–100 Quiz
+      </a>
+
+      <a class="home-button" href="barrons.html">
+        📚 333 Barron's
+      </a>
+
+      <a class="home-button" href="wordsmart.html">
+        ✍️ Word Smart
       </a>
 
     </div>
@@ -146,7 +144,6 @@
 
   </main>
 
-  <!-- Existing JavaScript file -->
   <script src="js/script.js" defer></script>
 
 </body>
