@@ -1,4 +1,4 @@
-```javascript
+
 /* ========================================
    EUDAIMONIA - QUIZ WEBSITE JAVASCRIPT
 ======================================== */
@@ -263,4 +263,3 @@ if (categorySelect) {
 
 createCategoryOptions();
 renderQuizzes();
-```
