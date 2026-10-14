@@ -1,145 +1,153 @@
-```html
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Eudaimonia | Choose an Exam</title>
-  <meta name="description" content="Practice vocabulary, English and model tests with Eudaimonia.">
+  <title>Eudaimonia | Learn Through Stories & Quizzes</title>
 
-  <!-- Separate CSS file -->
+  <meta name="description" content="Learn vocabulary through stories and practice with 100 days of quizzes.">
+
+  <!-- Existing CSS file -->
   <link rel="stylesheet" href="css/style.css">
 
-  <!-- Separate JavaScript file -->
-  <script src="js/script.js" defer></script>
+  <style>
+    /* Home page only */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #101a35, #244b73);
+      color: #ffffff;
+    }
+
+    .home-container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 25px;
+      box-sizing: border-box;
+    }
+
+    .home-container h1 {
+      font-size: clamp(38px, 7vw, 64px);
+      margin: 0 0 15px;
+      letter-spacing: 1px;
+    }
+
+    .home-description {
+      max-width: 650px;
+      margin: 0 auto 35px;
+      color: #dce8f5;
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    .home-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      flex-wrap: wrap;
+      gap: 18px;
+      width: 100%;
+      max-width: 550px;
+    }
+
+    .home-button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      flex: 1 1 220px;
+      min-height: 60px;
+      padding: 12px 20px;
+      box-sizing: border-box;
+      border: 2px solid #ffffff;
+      border-radius: 12px;
+      background: #ffffff;
+      color: #14213d;
+      text-decoration: none;
+      font-size: 17px;
+      font-weight: 700;
+      transition: background 0.2s, color 0.2s,
+                  transform 0.2s;
+    }
+
+    .home-button:hover {
+      background: #dbeafe;
+      color: #10264a;
+      transform: translateY(-3px);
+    }
+
+    .home-button:focus-visible {
+      outline: 3px solid #facc15;
+      outline-offset: 4px;
+    }
+
+    .home-footer {
+      margin-top: 55px;
+      color: #c6d4e5;
+      font-size: 14px;
+    }
+
+    @media (max-width: 480px) {
+      .home-container {
+        padding: 20px;
+      }
+
+      .home-description {
+        font-size: 16px;
+      }
+
+      .home-buttons {
+        flex-direction: column;
+      }
+
+      .home-button {
+        width: 100%;
+        flex-basis: auto;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-  <!-- Header -->
-  <header class="topbar">
-    <a class="brand" href="index.html">Eudaimonia</a>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="#ancientKnowledge">Ancient Knowledge</a>
-      <a href="#quizGrid">Quizzes</a>
-    </nav>
-  </header>
+  <main class="home-container">
 
-  <main>
+    <h1>Eudaimonia</h1>
 
-    <!-- Hero Section -->
-    <section class="hero">
-      <p class="eyebrow">LEARN • PRACTICE • GROW</p>
-      <h1>Choose a Quiz to Begin</h1>
-      <p>Build your vocabulary, improve your English and test your knowledge.</p>
-      <a class="hero-btn" href="#quizGrid">Explore Quizzes</a>
-    </section>
+    <p class="home-description">
+      Discover the power of ancient knowledge.
+      Improve your vocabulary through memorable stories
+      and challenge yourself with 100 days of quizzes.
+    </p>
 
-    <!-- Ancient Knowledge Sections -->
-    <section class="ancient-wrapper" id="ancientKnowledge">
-      <div class="section-heading">
-        <p class="eyebrow">EXPLORE THE PAST</p>
-        <h2>Ancient Knowledge</h2>
-        <p>Discover history, ideas and wisdom from the ancient world.</p>
-      </div>
+    <div class="home-buttons">
 
-      <div class="ancient-grid">
+      <!-- Button 1: Separate Stories page -->
+      <a class="home-button" href="stories.html">
+        📖 Read Stories
+      </a>
 
-        <article class="ancient-section">
-          <img
-            class="ancient-image"
-            src="images/ancient-library.jpg"
-            alt="Ancient library"
-            loading="lazy">
-          <div class="ancient-content">
-            <span class="ancient-label">KNOWLEDGE</span>
-            <h3>Ancient Libraries</h3>
-            <p>Explore the libraries that preserved knowledge for future generations.</p>
-            <a class="ancient-btn" href="#quizGrid">Explore More</a>
-          </div>
-        </article>
+      <!-- Button 2: Separate Day 1–100 page -->
+      <a class="home-button" href="days.html">
+        📝 Day 1–100 Quiz
+      </a>
 
-        <article class="ancient-section">
-          <img
-            class="ancient-image"
-            src="images/ancient-scrolls.jpg"
-            alt="Ancient scrolls"
-            loading="lazy">
-          <div class="ancient-content">
-            <span class="ancient-label">HISTORY</span>
-            <h3>Ancient Scrolls</h3>
-            <p>Discover how people recorded stories, discoveries and ideas.</p>
-            <a class="ancient-btn" href="#quizGrid">Explore More</a>
-          </div>
-        </article>
+    </div>
 
-        <article class="ancient-section">
-          <img
-            class="ancient-image"
-            src="images/greek-philosophy.jpg"
-            alt="Greek philosophy"
-            loading="lazy">
-          <div class="ancient-content">
-            <span class="ancient-label">PHILOSOPHY</span>
-            <h3>Greek Philosophy</h3>
-            <p>Learn about the thinkers who shaped philosophy and critical thinking.</p>
-            <a class="ancient-btn" href="#quizGrid">Explore More</a>
-          </div>
-        </article>
-
-        <article class="ancient-section">
-          <img
-            class="ancient-image"
-            src="images/ancient-map.jpg"
-            alt="Ancient map"
-            loading="lazy">
-          <div class="ancient-content">
-            <span class="ancient-label">CIVILIZATION</span>
-            <h3>Ancient Maps</h3>
-            <p>Travel through the maps and civilizations of the ancient world.</p>
-            <a class="ancient-btn" href="#quizGrid">Explore More</a>
-          </div>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- Quiz Selection -->
-    <section class="quiz-section" id="quizGridSection">
-      <div class="section-heading">
-        <p class="eyebrow">YOUR LEARNING JOURNEY</p>
-        <h2>Choose Your Exam</h2>
-        <p>Select a quiz or choose a specific day to start practising.</p>
-      </div>
-
-      <div class="toolbar">
-        <input
-          type="search"
-          id="search"
-          placeholder="Search quizzes or days..."
-          aria-label="Search quizzes">
-
-        <select id="category" aria-label="Filter by category">
-          <option value="all">All Categories</option>
-        </select>
-      </div>
-
-      <p id="count" class="quiz-count">Loading quizzes...</p>
-
-      <section class="grid" id="quizGrid">
-        <!-- Quiz cards will be added by js/script.js -->
-      </section>
-    </section>
+    <footer class="home-footer">
+      Learn • Remember • Improve
+    </footer>
 
   </main>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <p>© 2026 Eudaimonia. Learn something new every day.</p>
-  </footer>
+  <!-- Existing JavaScript file -->
+  <script src="js/script.js" defer></script>
 
 </body>
 </html>
-```
