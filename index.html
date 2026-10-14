@@ -12,33 +12,41 @@
 
 <style>
   body {
-    background: #14213d;
+    margin: 0;
+    background-color: #14213d;
   }
 
   body::before {
+    transition: background-position 0.1s linear;
     content: "";
     position: fixed;
-    inset: 0;
-    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-image: url("images/eudaimonia-bg.jpg");
     background-size: cover;
-    background-position: center;
+   background-position: var(--parallax-position, center);
     background-repeat: no-repeat;
+    z-index: -1;
   }
 
   body::after {
     content: "";
     position: fixed;
     inset: 0;
-    z-index: -1;
     background: rgba(10, 20, 40, 0.35);
+    z-index: -1;
     pointer-events: none;
   }
+  html {
+  scroll-behavior: smooth;
+}
 
-  .home-container {
-    position: relative;
-    z-index: 1;
-  }
+body::before {
+  background-attachment: scroll;
+  will-change: background-position;
+}
 </style>
 
 
@@ -85,13 +93,34 @@
 
   <script src="js/script.js" defer></script>
 
+
 <script>
-  const background = document.querySelector("body::before");
+  const parallaxBg = document.body;
 
   window.addEventListener("scroll", function () {
+    const offset = window.scrollY * 0.3;
+
+    parallaxBg.style.setProperty(
+      "--parallax-position",
+      `center calc(50% + ${offset}px)`
+    );
+
     document.body.style.setProperty(
-      "--parallax-offset",
-      `${window.scrollY * 0.25}px`
+      "--parallax-position",
+      `center calc(50% + ${offset}px)`
+    );
+
+    document.querySelector("body").style.backgroundPosition =
+      `center ${offset}px`;
+  }, { passive: true });
+</script>
+<script>
+  window.addEventListener("scroll", function () {
+    const offset = window.scrollY * 0.3;
+
+    document.body.style.setProperty(
+      "--parallax-position",
+      `center calc(50% + ${offset}px)`
     );
   }, { passive: true });
 </script>
