@@ -54,5 +54,16 @@
 
   <script src="js/script.js" defer></script>
 
+<script>
+  const background = document.querySelector("body::before");
+
+  window.addEventListener("scroll", function () {
+    document.body.style.setProperty(
+      "--parallax-offset",
+      `${window.scrollY * 0.25}px`
+    );
+  }, { passive: true });
+</script>
+
 </body>
 </html>
