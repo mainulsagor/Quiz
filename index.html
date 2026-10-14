@@ -8,8 +8,39 @@
   <title>Eudaimonia | Stories, Vocabulary & Quizzes</title>
 
   <meta name="description" content="Learn vocabulary through stories, 100 days of quizzes, 333 Barron's and Word Smart practice.">
-
   <link rel="stylesheet" href="css/style.css">
+
+<style>
+  body {
+    background: #14213d;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image: url("images/eudaimonia-bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: rgba(10, 20, 40, 0.35);
+    pointer-events: none;
+  }
+
+  .home-container {
+    position: relative;
+    z-index: 1;
+  }
+</style>
+
 
 
 </head>
