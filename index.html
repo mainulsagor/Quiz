@@ -125,6 +125,78 @@ button:hover, .btn:hover {
     transition-duration: 0.01ms !important;
   }
 }
+  ```css
+.eudaimonia-btn {
+  position: relative;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  padding: 22px 12px;
+  overflow: hidden;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  border: 1px solid #d4af67;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.eudaimonia-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(20, 12, 5, 0.92),
+    rgba(20, 12, 5, 0.08)
+  );
+}
+
+.eudaimonia-btn span,
+.eudaimonia-btn small {
+  position: relative;
+  z-index: 1;
+}
+
+.eudaimonia-btn span {
+  font-size: 20px;
+  font-weight: bold;
+  color: #f5d58b;
+}
+
+.eudaimonia-btn small {
+  font-size: 13px;
+  color: #fff;
+}
+
+.eudaimonia-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* images */
+.stories-bg {
+  background-image: url("images/ancient-library.jpg");
+}
+
+.days-bg {
+  background-image: url("images/ancient-scrolls.jpg");
+}
+
+.barrons-bg {
+  background-image: url("images/greek-philosophy.jpg");
+}
+
+.wordsmart-bg {
+  background-image: url("images/ancient-map.jpg");
+}
+```
 
 </style>
 
@@ -156,25 +228,34 @@ button:hover, .btn:hover {
       structured quizzes and practice tests.
     </p>
 
-    <div class="home-buttons">
+<div class="eudaimonia-buttons">
 
-      <a class="home-button" href="stories.html">
-        📖 Read Stories
-      </a>
+  <a href="https://mainulsagor.github.io/Quiz/stories.html"
+     class="eudaimonia-btn stories-bg">
+    <span>Read Stories</span>
+    <small>Learn through stories</small>
+  </a>
 
-      <a class="home-button" href="days.html">
-        📝 Day 1–100 Quiz
-      </a>
+  <a href="https://mainulsagor.github.io/Quiz/days.html"
+     class="eudaimonia-btn days-bg">
+    <span>Day 1–100 Quiz</span>
+    <small>Practice every day</small>
+  </a>
 
-      <a class="home-button" href="barrons.html">
-        📚 333 Barron's
-      </a>
+  <a href="https://mainulsagor.github.io/Quiz/barrons.html"
+     class="eudaimonia-btn barrons-bg">
+    <span>333 Barron's</span>
+    <small>Build your vocabulary</small>
+  </a>
 
-      <a class="home-button" href="wordsmart.html">
-        ✍️ Word Smart
-      </a>
+  <a href="https://mainulsagor.github.io/Quiz/wordsmart.html"
+     class="eudaimonia-btn wordsmart-bg">
+    <span>Word Smart</span>
+    <small>Master English words</small>
+  </a>
 
-    </div>
+</div>
+
 </section>
     <footer class="home-footer">
       Learn • Remember • Improve
